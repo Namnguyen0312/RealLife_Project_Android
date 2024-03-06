@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/off_white"
+    android:orientation="vertical"
+    tools:context=".TitleScreenActivity">
+
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="end"
+        android:src="@drawable/setting_icon"
+        android:id="@+id/settingBtn"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:fontFamily="@font/atomic_age"
+            android:text="RealLife"
+            android:textSize="40sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/newGameBtn"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/btn_rounded_corner"
+            android:fontFamily="@font/atomic_age"
+            android:text="New game"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/loadGameBtn"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/btn_rounded_corner"
+            android:fontFamily="@font/atomic_age"
+            android:text="Load Game"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/aboutBtn"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/btn_rounded_corner"
+            android:fontFamily="@font/atomic_age"
+            android:text="About"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

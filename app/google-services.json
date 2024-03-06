@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "820320106669",
+    "project_id": "reallife-backend",
+    "storage_bucket": "reallife-backend.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:820320106669:android:7eaecd14344446db05ee24",
+        "android_client_info": {
+          "package_name": "com.example.reallifeproject"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBewUkLlJFJbIecPs9utyjWZ5kUlnFAgE8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

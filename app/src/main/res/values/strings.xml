@@ -1,0 +1,91 @@
+<resources>
+    <string name="app_name">RealLife Project</string>
+
+    <string-array name="event_age0">
+
+        <item>You are a brave warrior, born and raised in a noble family
+            but choosing the adventurous path to fight against evil."</item>
+
+        <item>You were born in a remote countryside, where creatures of horror abound,
+            yet with strong determination, you rose up to fight against the demons.</item>
+
+        <item>You are a noblewoman warrior, carrying the bloodline of royalty.
+            Unable to bear the oppression of the demons, you set out on a quest to conquer justice.</item>
+
+        <item>Born into a poor peasant family, yet fueled by boundless love and
+            fortified by unwavering determination, you are on the path to becoming a strong warrior woman.</item>
+
+    </string-array>
+
+    <string-array name="activities_age">
+        <item>Choose your sword</item>
+        <item>Eat</item>
+        <item>Work</item>
+        <item>Exercise</item>
+        <item>Read</item>
+    </string-array>
+
+    <string-array name="probabilities">
+        <item>0.5</item>
+        <item>0.03</item>
+        <item>0.1</item>
+        <item>0.02</item>
+        <item>0.02</item>
+    </string-array>
+
+    <string-array name="activities_age1_age10">
+        <item>You stumbled onto the bed</item>
+        <item>You were given a battle axe by your father</item>
+        <item>You inherited intelligence from your mother.</item>
+        <item>You discovered a treasure hidden under the bed</item>
+        <item>You found five coins under the ground</item>
+        <item>You found ten coins under the ground</item>
+        <item>You found one coins under the ground</item>
+        <item>You found two coins under the ground</item>
+        <item>You found three coins under the ground</item>
+        <item>Mother read fairy tales to you</item>
+        <item>Mother and father argued</item>
+        <item>Father gave you a wooden stick</item>
+        <item>Father gave you a book about magic</item>
+        <item>Mother gave you a book about magic</item>
+        <item>Mother gave you pocket money</item>
+        <item>Father gave you pocket money</item>
+        <item>Your family has an additional member, a dog named Cat</item>
+        <item>Your family has an additional member, a cat named Dog</item>
+<!--        &lt;!&ndash;Girl&ndash;&gt;-->
+<!--        <item>Mother bought you a cute outfit</item>-->
+<!--        <item>Mother gave you a butterfly-shaped hair clip</item>-->
+<!--        &lt;!&ndash;Boy&ndash;&gt;-->
+<!--        <item>Mother taught you about swords</item>-->
+<!--        <item>Father taught you how to become a strong man</item>-->
+<!--        <item>Mother and father argued</item>-->
+<!--        <item>Mother and father argued</item>-->
+
+    </string-array>
+
+    <string-array name="probabilities_age1_age10">
+        <item>0.3</item>
+        <item>0.1</item>
+        <item>0.1</item>
+        <item>0.02</item>
+        <item>0.2</item>
+        <item>0.2</item>
+        <item>0.2</item>
+        <item>0.2</item>
+        <item>0.2</item>
+        <item>0.3</item>
+        <item>0.3</item>
+        <item>0.05</item>
+        <item>0.1</item>
+        <item>0.1</item>
+        <item>0.2</item>
+        <item>0.2</item>
+        <item>0.3</item>
+        <item>0.3</item>
+<!--        <item>0.02</item>-->
+<!--        <item>0.02</item>-->
+<!--        <item>0.02</item>-->
+<!--        <item>0.02</item>-->
+    </string-array>
+
+</resources>
