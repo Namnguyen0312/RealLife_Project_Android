@@ -48,20 +48,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:gravity="center"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
-                android:text="Age"
+                android:text="Day"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/ageTxt"
+                android:id="@+id/dayTxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0"
@@ -98,35 +97,53 @@
 
     </RelativeLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/eventLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/bottomLayout"
         android:layout_below="@+id/toolbar"
-        android:gravity="center"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/eventTxt"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="10dp"
-            android:fontFamily="@font/berkshire_swash"
-            android:text="You are warrior"
-            android:textAlignment="center"
-            android:textColor="@color/black"
-            android:textSize="20sp" />
+            android:orientation="vertical"
+            android:layout_centerInParent="true">
+
+            <TextView
+                android:id="@+id/eventTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/eventImg"
+                android:fontFamily="@font/berkshire_swash"
+                android:text="You are warrior"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:layout_gravity="center_horizontal"
+                android:textAlignment="center"/>
+
+            <ImageView
+                android:id="@+id/eventImg"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/mount_icon" />
+
+        </LinearLayout>
 
 
-        <ImageView
-            android:id="@+id/eventImg"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:src="@drawable/baby_icon" />
+
+
+        <ProgressBar
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:id="@+id/loadProgress"/>
 
         <!--        <Button-->
         <!--            android:id="@+id/eventBtn1"-->
@@ -159,16 +176,96 @@
         <!--            android:textSize="20sp" />-->
 
 
-    </LinearLayout>
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/bottomLayout"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="250dp"
         android:layout_alignParentBottom="true"
         android:background="@color/my_secondary"
         android:gravity="center"
         android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="10dp">
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/sword_icon"
+                android:id="@+id/atkPic"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/atkTxt"
+                android:text="100"
+                android:layout_toEndOf="@+id/atkPic"
+                android:layout_centerVertical="true"
+                android:textSize="25sp"
+                android:layout_marginStart="10dp"
+                android:textStyle="bold"/>
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/magic_wand_icon"
+                android:layout_toLeftOf="@+id/magicTxt"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/magicTxt"
+                android:text="10"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:textSize="25sp"
+                android:layout_marginStart="10dp"
+                android:textStyle="bold"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:layout_margin="10dp">
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/shield_icon"
+                android:id="@+id/defPic"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/defTxt"
+                android:text="100"
+                android:layout_toEndOf="@+id/defPic"
+                android:layout_centerVertical="true"
+                android:textSize="25sp"
+                android:layout_marginStart="10dp"
+                android:textStyle="bold"/>
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/agility_icon"
+                android:layout_toLeftOf="@+id/agiTxt"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/agiTxt"
+                android:text="10"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:textSize="25sp"
+                android:layout_marginStart="10dp"
+                android:textStyle="bold"/>
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -389,6 +486,7 @@
             </LinearLayout>
 
         </LinearLayout>
+
 
     </LinearLayout>
 

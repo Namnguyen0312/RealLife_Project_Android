@@ -4,88 +4,67 @@
     <string-array name="event_age0">
 
         <item>You are a brave warrior, born and raised in a noble family
-            but choosing the adventurous path to fight against evil."</item>
+            but choosing the adventurous path to fight against evil</item>
 
         <item>You were born in a remote countryside, where creatures of horror abound,
-            yet with strong determination, you rose up to fight against the demons.</item>
+            yet with strong determination, you rose up to fight against the demons</item>
 
         <item>You are a noblewoman warrior, carrying the bloodline of royalty.
-            Unable to bear the oppression of the demons, you set out on a quest to conquer justice.</item>
+            Unable to bear the oppression of the demons, you set out on a quest to conquer justice</item>
 
         <item>Born into a poor peasant family, yet fueled by boundless love and
-            fortified by unwavering determination, you are on the path to becoming a strong warrior woman.</item>
+            fortified by unwavering determination, you are on the path to becoming a strong warrior woman</item>
 
     </string-array>
 
-    <string-array name="activities_age">
-        <item>Choose your sword</item>
-        <item>Eat</item>
-        <item>Work</item>
-        <item>Exercise</item>
-        <item>Read</item>
-    </string-array>
 
-    <string-array name="probabilities">
-        <item>0.5</item>
-        <item>0.03</item>
-        <item>0.1</item>
-        <item>0.02</item>
-        <item>0.02</item>
-    </string-array>
-
-    <string-array name="activities_age1_age10">
-        <item>You stumbled onto the bed</item>
-        <item>You were given a battle axe by your father</item>
-        <item>You inherited intelligence from your mother.</item>
-        <item>You discovered a treasure hidden under the bed</item>
-        <item>You found five coins under the ground</item>
-        <item>You found ten coins under the ground</item>
-        <item>You found one coins under the ground</item>
-        <item>You found two coins under the ground</item>
-        <item>You found three coins under the ground</item>
-        <item>Mother read fairy tales to you</item>
-        <item>Mother and father argued</item>
-        <item>Father gave you a wooden stick</item>
-        <item>Father gave you a book about magic</item>
-        <item>Mother gave you a book about magic</item>
-        <item>Mother gave you pocket money</item>
-        <item>Father gave you pocket money</item>
-        <item>Your family has an additional member, a dog named Cat</item>
-        <item>Your family has an additional member, a cat named Dog</item>
-<!--        &lt;!&ndash;Girl&ndash;&gt;-->
-<!--        <item>Mother bought you a cute outfit</item>-->
-<!--        <item>Mother gave you a butterfly-shaped hair clip</item>-->
-<!--        &lt;!&ndash;Boy&ndash;&gt;-->
-<!--        <item>Mother taught you about swords</item>-->
-<!--        <item>Father taught you how to become a strong man</item>-->
-<!--        <item>Mother and father argued</item>-->
-<!--        <item>Mother and father argued</item>-->
+    <string-array name="activities_outside">
+        <item>You found a treasure</item>
+        <item>You found a dungeon</item>
+        <item>You were given something by the nearby villagers</item>
+        <item>You wander in the forest and are chased by a bear</item>
+        <item>You are lost in the forest</item>
+        <item>You step into a trap</item>
+        <item>You learn a new skill</item>
+        <item>You spend the whole day lying on the ground</item>
+        <item>You spend the entire day running</item>
+        <item>You find an abandoned village</item>
+        <item>You are captured and robbed by soldiers</item>
+        <item>You encounter a band of thieves</item>
+        <item>You receive a task to escort</item>
+        <item>You receive a rescue mission</item>
+        <item>You are invited to participate in a tournament</item>
+        <item>You are taught a skill by your master</item>
+        <item>You stumble over a rock</item>
+        <item>You find a book of magic spells</item>
+        <item>You meet a spirit</item>
+        <item>You are blessed by the dragon lord</item> <!-- hiem -->
 
     </string-array>
 
-    <string-array name="probabilities_age1_age10">
-        <item>0.3</item>
-        <item>0.1</item>
-        <item>0.1</item>
-        <item>0.02</item>
-        <item>0.2</item>
-        <item>0.2</item>
-        <item>0.2</item>
-        <item>0.2</item>
-        <item>0.2</item>
-        <item>0.3</item>
-        <item>0.3</item>
-        <item>0.05</item>
-        <item>0.1</item>
-        <item>0.1</item>
-        <item>0.2</item>
-        <item>0.2</item>
-        <item>0.3</item>
-        <item>0.3</item>
-<!--        <item>0.02</item>-->
-<!--        <item>0.02</item>-->
-<!--        <item>0.02</item>-->
-<!--        <item>0.02</item>-->
+
+    <string-array name="probabilities_outside">
+        <item>0.036</item>
+        <item>0.036</item>
+        <item>0.036</item>
+        <item>0.036</item>
+        <item>0.036</item>
+        <item>0.036</item>
+        <item>0.036</item>
+        <item>0.036</item>
+        <item>0.036</item>
+        <item>0.036</item>
+        <item>0.036</item>
+        <item>0.036</item>
+        <item>0.036</item>
+        <item>0.036</item>
+        <item>0.036</item>
+        <item>0.036</item>
+        <item>0.036</item>
+        <item>0.036</item>
+        <item>0.036</item>
+        <item>0.001</item>
     </string-array>
+
 
 </resources>

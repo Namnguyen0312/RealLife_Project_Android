@@ -29,6 +29,7 @@ import org.tensorflow.lite.support.tensorbuffer.TensorBuffer;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.util.Random;
 
 
 public class SceneDeterminationActivity extends AppCompatActivity {
@@ -36,10 +37,12 @@ public class SceneDeterminationActivity extends AppCompatActivity {
     private TextView resultTxt;
     private Button takePicBtn, gallaryBtn, nextBtn;
     private String gender, scene;
+    private int money, strength, smart, attack, magic, defense, agility;
     private String event;
     int imageSize = 64;
 
     private static final String TAG = "SceneDeterminationActiv";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,10 +54,10 @@ public class SceneDeterminationActivity extends AppCompatActivity {
 
         takePicBtn.setOnClickListener(v -> {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                if(checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED){
+                if (checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
                     Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     startActivityForResult(cameraIntent, 3);
-                }else {
+                } else {
                     requestPermissions(new String[]{Manifest.permission.CAMERA}, 100);
                 }
             }
@@ -66,46 +69,92 @@ public class SceneDeterminationActivity extends AppCompatActivity {
 
         nextBtn.setOnClickListener(v -> {
 
-            if (imagePic.getDrawable() == null){
+            if (imagePic.getDrawable() == null) {
                 AndroidUtil.showToast(this, "Please take a picture");
-            }
-
-            else {
+            } else {
                 String[] events = getApplicationContext().getResources().getStringArray(R.array.event_age0);
-                if (gender.equals("Man")){
-                    if (scene.equals("Noble")){
+                if (gender.equals("Man")) {
+                    if (scene.equals("Noble")) {
                         event = events[0];
-                    }else {
+                        strength = 0;
+                        smart = 0;
+                        Random random = new Random();
+                        int randomAttack = random.nextInt(3) + 1;
+                        int randomMagic = random.nextInt(3) + 1;
+                        int randomDefense = random.nextInt(3) + 1;
+                        int randomAgility = random.nextInt(3) + 1;
+                        attack = randomAttack;
+                        magic = randomMagic;
+                        defense = randomDefense;
+                        agility = randomAgility;
+                        money = 500;
+                    } else {
                         event = events[1];
+                        strength = 0;
+                        smart = 0;
+                        Random random = new Random();
+                        int randomAttack = random.nextInt(4) + 2;
+                        int randomMagic = random.nextInt(4) + 2;
+                        int randomDefense = random.nextInt(4) + 2;
+                        int randomAgility = random.nextInt(4) + 2;
+                        attack = randomAttack;
+                        magic = randomMagic;
+                        defense = randomDefense;
+                        agility = randomAgility;
+                        money = 200;
                     }
-                }else {
-                    if (scene.equals("Noble")){
+                } else {
+                    if (scene.equals("Noble")) {
                         event = events[2];
-                    }else {
+                        strength = 0;
+                        smart = 0;
+                        Random random = new Random();
+                        int randomAttack = random.nextInt(4) + 1;
+                        int randomMagic = random.nextInt(4) + 1;
+                        int randomDefense = random.nextInt(2) + 1;
+                        int randomAgility = random.nextInt(4) + 1;
+                        attack = randomAttack;
+                        magic = randomMagic;
+                        defense = randomDefense;
+                        agility = randomAgility;
+                        money = 500;
+                    } else {
                         event = events[3];
+                        strength = 0;
+                        smart = 0;
+                        Random random = new Random();
+                        int randomAttack = random.nextInt(5) + 2;
+                        int randomMagic = random.nextInt(5) + 2;
+                        int randomDefense = random.nextInt(3) + 2;
+                        int randomAgility = random.nextInt(5) + 2;
+                        attack = randomAttack;
+                        magic = randomMagic;
+                        defense = randomDefense;
+                        agility = randomAgility;
+                        money = 200;
                     }
                 }
 
 
-                PlayerModel playerModel = new PlayerModel(gender, scene, FirebaseUtil.currentUserId(), 0, 0, event, 100, 0, 0, 0);
+                PlayerModel playerModel = new PlayerModel(gender, scene, FirebaseUtil.currentUserId(), money, 0, event, 100, 0, strength, smart, attack, magic, defense, agility);
 
 
                 FirebaseUtil.getPlayerModelReference().get().addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         if (!task.getResult().isEmpty()) {
                             for (DocumentSnapshot document : task.getResult()) {
-                                if (document.getId().equals(playerModel.getPlayerId())){
+                                if (document.getId().equals(playerModel.getPlayerId())) {
                                     document.getReference().delete();
                                 }
                             }
                             FirebaseUtil.getPlayerModelReferenceWithId().set(playerModel).addOnCompleteListener(task1 -> {
-                                if (task1.isSuccessful()){
+                                if (task1.isSuccessful()) {
                                     navigateToInGame();
                                 }
                             });
                         } else {
                             FirebaseUtil.getPlayerModelReferenceWithId().set(playerModel).addOnCompleteListener(task1 -> {
-                                if (task1.isSuccessful()){
+                                if (task1.isSuccessful()) {
                                     navigateToInGame();
                                 }
                             });
@@ -119,12 +168,12 @@ public class SceneDeterminationActivity extends AppCompatActivity {
         });
     }
 
-    private void navigateToInGame(){
+    private void navigateToInGame() {
         Intent intent = new Intent(this, WaitingActivity.class);
         startActivity(intent);
     }
 
-    public void classifyImage(Bitmap image){
+    public void classifyImage(Bitmap image) {
         try {
             Modellandscape model = Modellandscape.newInstance(getApplicationContext());
             TensorBuffer inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 64, 64, 3}, DataType.FLOAT32);
@@ -134,8 +183,8 @@ public class SceneDeterminationActivity extends AppCompatActivity {
             int[] intValues = new int[imageSize * imageSize];
             image.getPixels(intValues, 0, image.getWidth(), 0, 0, image.getWidth(), image.getHeight());
             int pixel = 0;
-            for (int i = 0; i < imageSize; i++){
-                for (int j = 0; j < imageSize; j++){
+            for (int i = 0; i < imageSize; i++) {
+                for (int j = 0; j < imageSize; j++) {
                     int val = intValues[pixel++];
                     byteBuffer.putFloat(((val >> 16) & 0xFF) * (1.f / 1));
                     byteBuffer.putFloat(((val >> 8) & 0xFF) * (1.f / 1));
@@ -152,8 +201,8 @@ public class SceneDeterminationActivity extends AppCompatActivity {
 
             int maxPos = 0;
             float maxConfidence = 0;
-            for (int i = 0; i < confidence.length; i++){
-                if (confidence[i] > maxConfidence){
+            for (int i = 0; i < confidence.length; i++) {
+                if (confidence[i] > maxConfidence) {
                     maxConfidence = confidence[i];
                     maxPos = i;
                 }
@@ -170,8 +219,8 @@ public class SceneDeterminationActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (resultCode == RESULT_OK){
-            if (requestCode == 3){
+        if (resultCode == RESULT_OK) {
+            if (requestCode == 3) {
                 Bitmap image = (Bitmap) data.getExtras().get("data");
                 int dimension = Math.min(image.getWidth(), image.getHeight());
                 image = ThumbnailUtils.extractThumbnail(image, dimension, dimension);
@@ -179,7 +228,7 @@ public class SceneDeterminationActivity extends AppCompatActivity {
 
                 image = Bitmap.createScaledBitmap(image, imageSize, imageSize, false);
                 classifyImage(image);
-            }else {
+            } else {
                 Uri dat = data.getData();
                 Bitmap image = null;
                 try {
@@ -196,7 +245,7 @@ public class SceneDeterminationActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    private void initView(){
+    private void initView() {
         imagePic = findViewById(R.id.imagePic);
         takePicBtn = findViewById(R.id.takePicBtn);
         gallaryBtn = findViewById(R.id.gallaryBtn);

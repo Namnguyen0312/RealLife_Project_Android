@@ -15,8 +15,11 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.reallifeproject.model.PlayerModel;
+import com.example.reallifeproject.utils.AndroidUtil;
 import com.example.reallifeproject.utils.FirebaseUtil;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
 
 public class TitleScreenActivity extends AppCompatActivity {
     private ImageView settingBtn;
@@ -38,9 +41,21 @@ public class TitleScreenActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        loadGameBtn.setOnClickListener(v -> {
-            Intent intent = new Intent(this, WaitingActivity.class);
-            startActivity(intent);
+        FirebaseUtil.getPlayerModelReferenceWithId().get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                DocumentSnapshot document = task.getResult();
+                if (document.exists()) {
+                    loadGameBtn.setEnabled(true);
+                    loadGameBtn.setOnClickListener(v -> {
+                        Intent intent = new Intent(this, WaitingActivity.class); // Thay bằng màn hình chờ đợi hoặc màn hình trò chơi của bạn
+                        startActivity(intent);
+                    });
+                } else {
+                    loadGameBtn.setEnabled(false);
+                }
+            } else {
+                loadGameBtn.setEnabled(false);
+            }
         });
 
         aboutBtn.setOnClickListener(v -> {

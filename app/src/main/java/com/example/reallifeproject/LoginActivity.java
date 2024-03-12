@@ -61,16 +61,19 @@ public class LoginActivity extends AppCompatActivity {
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         FirebaseUser user = mAuth.getCurrentUser();
-                        if (user != null && user.isEmailVerified()) {
-                            setInProgress(false);
-                            Intent intent = new Intent(LoginActivity.this, TitleScreenActivity.class);
-                            startActivity(intent);
-                            finish();
-                        } else {
-                            setInProgress(false);
-                            AndroidUtil.showToast(this, "Please verify your email before logging in");
+                        if (user != null) {
+                            if (user.isEmailVerified()) {
+                                setInProgress(false);
+                                Intent intent = new Intent(LoginActivity.this, TitleScreenActivity.class);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                mAuth.signOut();
+                                setInProgress(false);
+                                AndroidUtil.showToast(this, "Please verify your email before logging in");
+                            }
                         }
-                    } else {
+                    }else {
                         setInProgress(false);
                         AndroidUtil.showToast(this, "wrong email or password");
                     }

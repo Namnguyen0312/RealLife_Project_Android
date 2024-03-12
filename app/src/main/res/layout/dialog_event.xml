@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -13,14 +14,15 @@
         android:layout_gravity="center_horizontal"
         android:id="@+id/randomEventTxt"
         android:textSize="20sp"
-        android:textColor="@color/black"/>
+        android:textColor="@color/black" />
 
     <ImageView
-        android:layout_width="32dp"
-        android:layout_height="32dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"
-        android:id="@+id/randomEventPic"/>
+        android:id="@+id/randomEventPic"
+        app:tint="@color/black" />
 
 
     <Button

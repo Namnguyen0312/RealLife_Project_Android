@@ -7,8 +7,6 @@ public class UserModel {
     private String password;
     private Timestamp createdTimestamp;
     private String userId;
-    private String gender;
-    private String scene;
 
     public UserModel() {
     }
@@ -52,19 +50,4 @@ public class UserModel {
         this.userId = userId;
     }
 
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public String getScene() {
-        return scene;
-    }
-
-    public void setScene(String scene) {
-        this.scene = scene;
-    }
 }

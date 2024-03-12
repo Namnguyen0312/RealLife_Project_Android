@@ -5,28 +5,35 @@ public class PlayerModel {
     private String scene;
     private String playerId;
     private int money;
-    private int age;
+    private int day;
     private String event;
     private int heart;
     private int stress;
     private int strength;
     private int smart;
-
+    private int attack;
+    private int magic;
+    private int defense;
+    private int agility;
 
     public PlayerModel() {
     }
 
-    public PlayerModel(String gender, String scene, String playerId, int money, int age, String event, int heart, int stress, int strength, int smart) {
+    public PlayerModel(String gender, String scene, String playerId, int money, int day, String event, int heart, int stress, int strength, int smart, int attack, int magic, int defense, int agility) {
         this.gender = gender;
         this.scene = scene;
         this.playerId = playerId;
         this.money = money;
-        this.age = age;
+        this.day = day;
         this.event = event;
         this.heart = heart;
         this.stress = stress;
         this.strength = strength;
         this.smart = smart;
+        this.attack = attack;
+        this.magic = magic;
+        this.defense = defense;
+        this.agility = agility;
     }
 
     public String getGender() {
@@ -61,12 +68,12 @@ public class PlayerModel {
         this.money = money;
     }
 
-    public int getAge() {
-        return age;
+    public int getDay() {
+        return day;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public void setDay(int day) {
+        this.day = day;
     }
 
     public String getEvent() {
@@ -109,4 +116,35 @@ public class PlayerModel {
         this.smart = smart;
     }
 
+    public int getAttack() {
+        return attack;
+    }
+
+    public void setAttack(int attack) {
+        this.attack = attack;
+    }
+
+    public int getMagic() {
+        return magic;
+    }
+
+    public void setMagic(int magic) {
+        this.magic = magic;
+    }
+
+    public int getDefense() {
+        return defense;
+    }
+
+    public void setDefense(int defense) {
+        this.defense = defense;
+    }
+
+    public int getAgility() {
+        return agility;
+    }
+
+    public void setAgility(int agility) {
+        this.agility = agility;
+    }
 }
