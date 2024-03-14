@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="30dp"
         android:gravity="center"
-        android:text="LOGIN"
+        android:text="Đăng nhập"
         android:textSize="50dp"
         android:textStyle="bold" />
 
@@ -36,16 +36,16 @@
         android:layout_margin="10dp"
         android:background="@drawable/edt_text_rounded_corner"
         android:elevation="4dp"
-        android:hint="Enter Email"
-        android:textSize="25sp"
-        android:inputType="textEmailAddress"/>
+        android:hint="Vui lòng nhập email"
+        android:inputType="textEmailAddress"
+        android:textSize="25sp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:layout_margin="10dp"
-        android:text="Password: "
+        android:text="Mật khẩu: "
         android:textSize="20sp"
         android:textStyle="bold" />
 
@@ -57,7 +57,7 @@
         android:layout_margin="10dp"
         android:background="@drawable/edt_text_rounded_corner"
         android:elevation="4dp"
-        android:hint="Enter Password"
+        android:hint="Vui lòng nhập mật khẩu"
         android:textSize="25sp"
         android:inputType="textPassword"/>
 
@@ -68,7 +68,7 @@
         android:layout_height="50dp"
         android:layout_margin="20dp"
         android:background="@drawable/btn_rounded_corner"
-        android:text="Log in"
+        android:text="Xác nhận"
         android:layout_gravity="center"/>
 
     <ProgressBar

@@ -13,11 +13,18 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.reallifeproject.adapter.DayRecViewAdapter;
 import com.example.reallifeproject.dialog.EventDialog;
+import com.example.reallifeproject.model.DayModel;
 import com.example.reallifeproject.model.PlayerModel;
 import com.example.reallifeproject.utils.AndroidUtil;
 import com.example.reallifeproject.utils.FirebaseUtil;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.Query;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,19 +32,21 @@ import java.util.Random;
 
 
 public class InGameActivity extends AppCompatActivity implements EventDialog.EventDialogListener {
-    private TextView moneyTxt, dayTxt, eventTxt, genderTxt, sceneTxt, atkTxt, magicTxt, defTxt, agiTxt;
+    private TextView moneyTxt, dayTxt, genderTxt, sceneTxt, atkTxt, magicTxt, defTxt, agiTxt;
     private TextView valueHeart, valueStress, valueStrength, valueSmart;
     //    private Button eventBtn1, eventBtn2, eventBtn3;
-    private RelativeLayout eventLayout;
-    private ImageView eventImg;
+    private Button dayBtn;
     private ProgressBar heartProgress, stressProgress, strengthProgress, smartProgress;
     private ProgressBar loadProgress;
     private PlayerModel playerModel;
     private int day = 0;
     private String event, gender, scene;
     private int heart, stress, strength, smart, money, attack, magic, defense, agility;
-    private int countClick = 0;
+    private boolean isDead = false;
+    private RecyclerView dayRecView;
+    private DayRecViewAdapter adapter;
     private static final String TAG = "InGameActivity";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,56 +60,55 @@ public class InGameActivity extends AppCompatActivity implements EventDialog.Eve
         loadProgress.setVisibility(View.GONE);
 
         loadGame();
-//        eventLayout.setOnClickListener(v -> {
-//            countClick++;
-//
-//            if (day == 0){
-//                day++;
-//                dayTxt.setText(String.valueOf(day));
-//
-//            }
-//
-//            if (countClick % 2 == 1){
-//                if(day >= 1) {
-//                    eventImg.setImageResource(R.drawable.strength_icon);
-//                    event = "You are training to fight evil";
-//                    eventTxt.setText(event);
-//                    openDialog();
-//                }
-//
-//            }
-//            else {
-//                saveModel();
-//                loadProgress.setVisibility(View.VISIBLE);
-//                FirebaseUtil.getPlayerModelReferenceWithId().set(playerModel).addOnCompleteListener(task -> {
-//                    if(task.isSuccessful()){
-//                        loadProgress.setVisibility(View.GONE);
-//                        day++;
-//                        dayTxt.setText(String.valueOf(day));
-//                    }
-//                });
-//            }
-//
-//
-//        });
 
-        eventLayout.setOnClickListener(v -> {
-            if (day == 0) {
-                day++;
-                dayTxt.setText(String.valueOf(day));
-                eventImg.setImageResource(R.drawable.strength_icon);
-                event = "You are training to fight evil";
-                eventTxt.setText(event);
-            } else if (day >= 1) {
+        setupRecView();
+        registerSnapshotListener();
+        dayBtn.setOnClickListener(v -> {
+            if (isDead){
+                loadProgress.setVisibility(View.VISIBLE);
+                FirebaseUtil.getPlayerModelReference().get().addOnCompleteListener(task -> {
+                    if(task.isSuccessful()){
+                        if (!task.getResult().isEmpty()){
+                            for (DocumentSnapshot document : task.getResult()) {
+                                if (document.getId().equals(playerModel.getPlayerId())) {
+                                    document.getReference().delete();
+                                }
+                            }
+                            loadProgress.setVisibility(View.GONE);
+                            Intent intent = new Intent(InGameActivity.this, TitleScreenActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(intent);
+                        }
+                    } else {
+                        Log.d(TAG, "Error getting collection: ", task.getException());
+                    }
+                });
+            }else {
                 day++;
                 dayTxt.setText(String.valueOf(day));
                 openDialog();
-            }
 
+            }
         });
 
     }
 
+    private void registerSnapshotListener() {
+        FirebaseUtil.getDayModelReference().addSnapshotListener((snapshot, error) -> {
+            if (error != null) {
+                Log.e(TAG, "Listen failed", error);
+                return;
+            }
+
+            if (snapshot != null && !snapshot.isEmpty()) {
+                adapter.notifyDataSetChanged();
+                dayRecView.smoothScrollToPosition(day+1);
+
+            } else {
+                Log.d(TAG, "No data");
+            }
+        });
+    }
 
     private void openDialog() {
         Bundle bundle = new Bundle();
@@ -117,6 +125,8 @@ public class InGameActivity extends AppCompatActivity implements EventDialog.Eve
         bundle.putInt("agility", agility);
         bundle.putInt("money", money);
         bundle.putInt("day", day);
+        bundle.putString("event", event);
+        bundle.putBoolean("isDead", isDead);
 
         EventDialog eventDialog = new EventDialog();
 
@@ -125,6 +135,28 @@ public class InGameActivity extends AppCompatActivity implements EventDialog.Eve
 
     }
 
+    private  void setupRecView(){
+        Query query = FirebaseUtil.getDayModelReference()
+                .orderBy("day", Query.Direction.ASCENDING);
+
+        FirestoreRecyclerOptions<DayModel> options = new FirestoreRecyclerOptions.Builder<DayModel>()
+                .setQuery(query, DayModel.class).build();
+
+        adapter = new DayRecViewAdapter(options, getApplicationContext());
+
+        LinearLayoutManager manager = new LinearLayoutManager(this);
+//        manager.setReverseLayout(true);
+        dayRecView.setLayoutManager(manager);
+        dayRecView.setAdapter(adapter);
+        adapter.startListening();
+        adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onItemRangeInserted(int positionStart, int itemCount) {
+                super.onItemRangeInserted(positionStart, itemCount);
+                dayRecView.smoothScrollToPosition(day+1);
+            }
+        });
+    }
 
     private void loadGame() {
         heart = playerModel.getHeart();
@@ -140,10 +172,7 @@ public class InGameActivity extends AppCompatActivity implements EventDialog.Eve
         magic = playerModel.getMagic();
         defense = playerModel.getDefense();
         agility = playerModel.getAgility();
-
-        if (day >= 1) {
-            eventImg.setImageResource(R.drawable.strength_icon);
-        }
+        isDead = playerModel.isDead();
 
 
         valueHeart.setText(String.valueOf(heart));
@@ -154,7 +183,6 @@ public class InGameActivity extends AppCompatActivity implements EventDialog.Eve
         stressProgress.setProgress(stress);
         strengthProgress.setProgress(strength);
         smartProgress.setProgress(smart);
-        eventTxt.setText(String.valueOf(event));
         genderTxt.setText(gender);
         sceneTxt.setText(scene);
         moneyTxt.setText(String.valueOf(money));
@@ -163,13 +191,12 @@ public class InGameActivity extends AppCompatActivity implements EventDialog.Eve
         magicTxt.setText(String.valueOf(magic));
         defTxt.setText(String.valueOf(defense));
         agiTxt.setText(String.valueOf(agility));
+
     }
 
     private void initView() {
-        eventLayout = findViewById(R.id.eventLayout);
         moneyTxt = findViewById(R.id.moneyTxt);
         dayTxt = findViewById(R.id.dayTxt);
-        eventTxt = findViewById(R.id.eventTxt);
         genderTxt = findViewById(R.id.genderTxt);
         sceneTxt = findViewById(R.id.sceneTxt);
         valueHeart = findViewById(R.id.valueHeart);
@@ -180,6 +207,8 @@ public class InGameActivity extends AppCompatActivity implements EventDialog.Eve
         magicTxt = findViewById(R.id.magicTxt);
         defTxt = findViewById(R.id.defTxt);
         agiTxt = findViewById(R.id.agiTxt);
+        dayRecView = findViewById(R.id.dayRecView);
+        dayBtn = findViewById(R.id.dayBtn);
 
 //        eventBtn1 = findViewById(R.id.eventBtn1);
 //        eventBtn2 = findViewById(R.id.eventBtn2);
@@ -189,7 +218,6 @@ public class InGameActivity extends AppCompatActivity implements EventDialog.Eve
         stressProgress = findViewById(R.id.stressProgress);
         strengthProgress = findViewById(R.id.strengthProgress);
         smartProgress = findViewById(R.id.smartProgress);
-        eventImg = findViewById(R.id.eventImg);
     }
 
     @Override
@@ -224,6 +252,7 @@ public class InGameActivity extends AppCompatActivity implements EventDialog.Eve
             strengthProgress.setProgress(strength);
             valueStrength.setText(String.valueOf(strength));
         }
+
         if (att.containsKey("smart")) {
             smart = (int) att.get("smart");
             if (smart > 100) {
@@ -234,12 +263,28 @@ public class InGameActivity extends AppCompatActivity implements EventDialog.Eve
             smartProgress.setProgress(smart);
             valueSmart.setText(String.valueOf(smart));
         }
+
+        if (att.containsKey("agility")) {
+            agility = (int) att.get("agility");
+             if (agility < 0) {
+                smart = 0;
+            }
+            agiTxt.setText(String.valueOf(agility));
+        }
+
         if (att.containsKey("money")) {
             money = (int) att.get("money");
             if (money < 0) {
                 money = 0;
             }
             moneyTxt.setText(String.valueOf(money));
+        }
+
+        if (att.containsKey("isDead")){
+            isDead = (boolean) att.get("isDead");
+            if (isDead){
+                dayBtn.setText("Chơi mới");
+            }
         }
     }
 

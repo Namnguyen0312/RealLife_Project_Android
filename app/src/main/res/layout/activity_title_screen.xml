@@ -39,7 +39,7 @@
             android:layout_marginTop="20dp"
             android:background="@drawable/btn_rounded_corner"
             android:fontFamily="@font/atomic_age"
-            android:text="New game"
+            android:text="Chơi mới"
             android:textSize="20sp" />
 
         <Button
@@ -50,7 +50,7 @@
             android:layout_marginTop="20dp"
             android:background="@drawable/btn_rounded_corner"
             android:fontFamily="@font/atomic_age"
-            android:text="Load Game"
+            android:text="Chơi tiếp"
             android:textSize="20sp" />
 
         <Button

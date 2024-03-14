@@ -28,6 +28,7 @@ public class AndroidUtil {
         intent.putExtra("magic", model.getMagic());
         intent.putExtra("defense", model.getDefense());
         intent.putExtra("agility", model.getAgility());
+        intent.putExtra("isDead", model.isDead());
     }
 
     public static PlayerModel getPlayerModelFromIntent(Intent intent){
@@ -46,6 +47,7 @@ public class AndroidUtil {
         playerModel.setAttack(intent.getIntExtra("attack",0));
         playerModel.setDefense(intent.getIntExtra("defense",0));
         playerModel.setAgility(intent.getIntExtra("agility",0));
+        playerModel.setDead(intent.getBooleanExtra("isDead", false));
         return playerModel;
     }
 

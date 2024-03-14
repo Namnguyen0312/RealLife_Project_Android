@@ -16,7 +16,14 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:background="@drawable/btn_rounded_corner"
-        android:text="Next" />
+        android:text="Bắt đầu" />
+
+    <ProgressBar
+        android:id="@+id/loadProgress"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_gravity="end"
+        android:indeterminateTint="@color/black" />
 
 
     <TextView
@@ -24,7 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="50dp"
-        android:text="Scene"
+        android:text="Xuất thân"
         android:textSize="50sp"
         android:textStyle="bold" />
 
@@ -49,7 +56,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="50dp"
         android:background="@drawable/btn_rounded_corner"
-        android:text="Take a picture" />
+        android:text="Chụp ảnh" />
 
     <Button
         android:id="@+id/gallaryBtn"
@@ -58,7 +65,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
         android:background="@drawable/btn_rounded_corner"
-        android:text="Gallary" />
+        android:text="Thư viện" />
 
 
 </LinearLayout>

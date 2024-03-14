@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".WaitingActivity"
-    android:background="@color/my_secondary"
+    android:background="@color/white"
     android:orientation="vertical"
     android:gravity="center">
 
@@ -16,7 +16,8 @@
         android:text="RealLife"
         android:textSize="70sp"
         android:fontFamily="@font/berkshire_swash"
-        android:layout_marginBottom="70dp"/>
+        android:layout_marginBottom="70dp"
+        android:textColor="@color/black"/>
 
     <ProgressBar
         android:layout_width="wrap_content"

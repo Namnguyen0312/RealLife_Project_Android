@@ -9,15 +9,18 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.Manifest;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.reallifeproject.ml.Modellandscape;
+import com.example.reallifeproject.model.DayModel;
 import com.example.reallifeproject.model.PlayerModel;
 import com.example.reallifeproject.utils.AndroidUtil;
 import com.example.reallifeproject.utils.FirebaseUtil;
@@ -36,6 +39,7 @@ public class SceneDeterminationActivity extends AppCompatActivity {
     private ImageView imagePic;
     private TextView resultTxt;
     private Button takePicBtn, gallaryBtn, nextBtn;
+    private ProgressBar loadProgress;
     private String gender, scene;
     private int money, strength, smart, attack, magic, defense, agility;
     private String event;
@@ -51,6 +55,8 @@ public class SceneDeterminationActivity extends AppCompatActivity {
         initView();
 
         gender = getIntent().getStringExtra("gender").toString();
+
+        setInProgress(false);
 
         takePicBtn.setOnClickListener(v -> {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -68,13 +74,13 @@ public class SceneDeterminationActivity extends AppCompatActivity {
         });
 
         nextBtn.setOnClickListener(v -> {
-
+            setInProgress(true);
             if (imagePic.getDrawable() == null) {
-                AndroidUtil.showToast(this, "Please take a picture");
+                AndroidUtil.showToast(this, "Hãy chụp một bức ảnh");
             } else {
                 String[] events = getApplicationContext().getResources().getStringArray(R.array.event_age0);
-                if (gender.equals("Man")) {
-                    if (scene.equals("Noble")) {
+                if (gender.equals("Nam")) {
+                    if (scene.equals("Quý tộc")) {
                         event = events[0];
                         strength = 0;
                         smart = 0;
@@ -104,7 +110,7 @@ public class SceneDeterminationActivity extends AppCompatActivity {
                         money = 200;
                     }
                 } else {
-                    if (scene.equals("Noble")) {
+                    if (scene.equals("Quý tộc")) {
                         event = events[2];
                         strength = 0;
                         smart = 0;
@@ -136,8 +142,8 @@ public class SceneDeterminationActivity extends AppCompatActivity {
                 }
 
 
-                PlayerModel playerModel = new PlayerModel(gender, scene, FirebaseUtil.currentUserId(), money, 0, event, 100, 0, strength, smart, attack, magic, defense, agility);
-
+                PlayerModel playerModel = new PlayerModel(gender, scene, FirebaseUtil.currentUserId(), money, 0, event, 100, 0, strength, smart, attack, magic, defense, agility, false);
+                DayModel dayModel = new DayModel(money, 0, event, 100, 0, strength, smart, attack, magic, defense, agility);
 
                 FirebaseUtil.getPlayerModelReference().get().addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
@@ -149,13 +155,39 @@ public class SceneDeterminationActivity extends AppCompatActivity {
                             }
                             FirebaseUtil.getPlayerModelReferenceWithId().set(playerModel).addOnCompleteListener(task1 -> {
                                 if (task1.isSuccessful()) {
-                                    navigateToInGame();
+                                    FirebaseUtil.getDayModelReference().get().addOnCompleteListener(task2 -> {
+                                        if(task2.isSuccessful()){
+                                            if (!task.getResult().isEmpty()){
+
+                                                for (DocumentSnapshot document : task2.getResult()) {
+                                                    document.getReference().delete();
+                                                }
+                                                setInProgress(false);
+
+                                                FirebaseUtil.getDayModelReference().add(dayModel).addOnCompleteListener(task3 -> {
+                                                    navigateToInGame();
+                                                });
+                                            }else {
+                                                setInProgress(false);
+
+                                                FirebaseUtil.getDayModelReference().add(dayModel).addOnCompleteListener(task3 -> {
+                                                    navigateToInGame();
+                                                });
+                                                Log.d(TAG, "Collection does not exist or is empty");
+                                            }
+                                        }else {
+                                            Log.d(TAG, "Error getting collection: ", task.getException());
+                                        }
+                                    });
                                 }
                             });
                         } else {
+                            setInProgress(false);
                             FirebaseUtil.getPlayerModelReferenceWithId().set(playerModel).addOnCompleteListener(task1 -> {
                                 if (task1.isSuccessful()) {
-                                    navigateToInGame();
+                                    FirebaseUtil.getDayModelReference().add(dayModel).addOnCompleteListener(task2 -> {
+                                        navigateToInGame();
+                                    });
                                 }
                             });
                             Log.d(TAG, "Collection does not exist or is empty");
@@ -173,7 +205,17 @@ public class SceneDeterminationActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void classifyImage(Bitmap image) {
+    private void setInProgress(boolean isLoad){
+        if (isLoad) {
+            loadProgress.setVisibility(View.VISIBLE);
+            nextBtn.setVisibility(View.GONE);
+        } else {
+            loadProgress.setVisibility(View.GONE);
+            nextBtn.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void classifyImage(Bitmap image) {
         try {
             Modellandscape model = Modellandscape.newInstance(getApplicationContext());
             TensorBuffer inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 64, 64, 3}, DataType.FLOAT32);
@@ -207,7 +249,7 @@ public class SceneDeterminationActivity extends AppCompatActivity {
                     maxPos = i;
                 }
             }
-            String[] classes = {"Noble", "Farmer"};
+            String[] classes = {"Quý tộc", "Nông dân"};
             resultTxt.setText(classes[maxPos]);
             scene = classes[maxPos];
             model.close();
@@ -251,6 +293,7 @@ public class SceneDeterminationActivity extends AppCompatActivity {
         gallaryBtn = findViewById(R.id.gallaryBtn);
         nextBtn = findViewById(R.id.nextBtn);
         resultTxt = findViewById(R.id.resultTxt);
+        loadProgress = findViewById(R.id.loadProgress);
     }
 
 }

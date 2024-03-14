@@ -54,7 +54,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
-                android:text="Day"
+                android:text="Ngày"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -71,25 +71,31 @@
         </LinearLayout>
 
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_marginEnd="5dp"
+        <ProgressBar
+            android:id="@+id/loadProgress"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="20dp"
+            android:layout_toStartOf="@+id/linearLayout"
+            android:indeterminateTint="@color/black" />
+
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/coin_icon"
             android:layout_toStartOf="@+id/moneyTxt"
-            android:text="$"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="17dp"/>
 
         <TextView
             android:id="@+id/moneyTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
             android:layout_marginEnd="10dp"
-            android:text="0"
+            android:text="1"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -103,77 +109,14 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/bottomLayout"
         android:layout_below="@+id/toolbar"
+        android:layout_marginTop="-1dp"
+        android:layout_marginBottom="2dp"
         android:orientation="vertical">
 
-        <LinearLayout
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/dayRecView"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_centerInParent="true">
-
-            <TextView
-                android:id="@+id/eventTxt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_above="@+id/eventImg"
-                android:fontFamily="@font/berkshire_swash"
-                android:text="You are warrior"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:layout_gravity="center_horizontal"
-                android:textAlignment="center"/>
-
-            <ImageView
-                android:id="@+id/eventImg"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                android:layout_marginTop="10dp"
-                android:layout_gravity="center_horizontal"
-                android:src="@drawable/mount_icon" />
-
-        </LinearLayout>
-
-
-
-
-        <ProgressBar
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            android:id="@+id/loadProgress"/>
-
-        <!--        <Button-->
-        <!--            android:id="@+id/eventBtn1"-->
-        <!--            android:layout_width="200dp"-->
-        <!--            android:layout_height="50dp"-->
-        <!--            android:layout_gravity="center"-->
-        <!--            android:layout_marginTop="30dp"-->
-        <!--            android:background="@drawable/btn_rounded_corner"-->
-        <!--            android:text="Cry"-->
-        <!--            android:textSize="20sp" />-->
-
-        <!--        <Button-->
-        <!--            android:id="@+id/eventBtn2"-->
-        <!--            android:layout_width="200dp"-->
-        <!--            android:layout_height="50dp"-->
-        <!--            android:layout_gravity="center"-->
-        <!--            android:layout_marginTop="10dp"-->
-        <!--            android:background="@drawable/btn_rounded_corner"-->
-        <!--            android:text="Don't cry"-->
-        <!--            android:textSize="20sp" />-->
-
-        <!--        <Button-->
-        <!--            android:id="@+id/eventBtn3"-->
-        <!--            android:layout_width="200dp"-->
-        <!--            android:layout_height="50dp"-->
-        <!--            android:layout_gravity="center"-->
-        <!--            android:layout_marginTop="10dp"-->
-        <!--            android:background="@drawable/btn_rounded_corner"-->
-        <!--            android:text="Cry"-->
-        <!--            android:textSize="20sp" />-->
+            android:layout_height="wrap_content" />
 
 
     </RelativeLayout>
@@ -187,84 +130,104 @@
         android:gravity="center"
         android:orientation="vertical">
 
+
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="32dp"
+            android:layout_height="100dp"
             android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp">
+
+            <Button
+                android:layout_width="180dp"
+                android:layout_height="90dp"
+                android:layout_centerInParent="true"
+                android:text="Thêm ngày"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:textSize="25sp"
+                android:id="@+id/dayBtn"/>
+
 
             <ImageView
+                android:id="@+id/atkPic"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:src="@drawable/sword_icon"
-                android:id="@+id/atkPic"/>
+                android:layout_marginTop="10dp"/>
+
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:id="@+id/atkTxt"
-                android:text="100"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
                 android:layout_toEndOf="@+id/atkPic"
-                android:layout_centerVertical="true"
-                android:textSize="25sp"
-                android:layout_marginStart="10dp"
-                android:textStyle="bold"/>
-
-            <ImageView
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:src="@drawable/magic_wand_icon"
-                android:layout_toLeftOf="@+id/magicTxt"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/magicTxt"
-                android:text="10"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:textSize="25sp"
-                android:layout_marginStart="10dp"
-                android:textStyle="bold"/>
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="32dp"
-            android:layout_margin="10dp">
-
-            <ImageView
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:src="@drawable/shield_icon"
-                android:id="@+id/defPic"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/defTxt"
                 android:text="100"
-                android:layout_toEndOf="@+id/defPic"
-                android:layout_centerVertical="true"
                 android:textSize="25sp"
-                android:layout_marginStart="10dp"
-                android:textStyle="bold"/>
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:layout_marginTop="10dp"/>
 
             <ImageView
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                android:src="@drawable/agility_icon"
-                android:layout_toLeftOf="@+id/agiTxt"/>
+                android:layout_toLeftOf="@+id/magicTxt"
+                android:src="@drawable/magic_wand_icon"
+                android:layout_marginTop="10dp"/>
 
             <TextView
+                android:id="@+id/magicTxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/agiTxt"
-                android:text="10"
                 android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:textSize="25sp"
                 android:layout_marginStart="10dp"
-                android:textStyle="bold"/>
+                android:text="100"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/black"/>
+
+            <ImageView
+                android:id="@+id/defPic"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_alignParentBottom="true"
+                android:src="@drawable/shield_icon"
+                android:layout_marginBottom="10dp"/>
+
+            <TextView
+                android:id="@+id/defTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@+id/defPic"
+                android:text="100"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="10dp"
+                android:textColor="@color/black"/>
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_toLeftOf="@+id/agiTxt"
+                android:layout_alignParentBottom="true"
+                android:src="@drawable/agility_icon"
+                android:layout_marginBottom="10dp"/>
+
+            <TextView
+                android:id="@+id/agiTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="10dp"
+                android:text="100"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="10dp"
+                android:textColor="@color/black"/>
         </RelativeLayout>
 
         <LinearLayout
@@ -276,23 +239,24 @@
             <ImageView
                 android:layout_width="32dp"
                 android:layout_height="32dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
                 android:src="@drawable/heart_icon"
                 app:tint="@color/red" />
 
-            <TextView
-                android:layout_width="90dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="Heart"
-                android:textColor="@color/red"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+<!--            <TextView-->
+<!--                android:layout_width="90dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="center"-->
+<!--                android:text="Heart"-->
+<!--                android:textColor="@color/red"-->
+<!--                android:textSize="20sp"-->
+<!--                android:textStyle="bold" />-->
 
             <ProgressBar
                 android:id="@+id/heartProgress"
                 style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-                android:layout_width="200dp"
+                android:layout_width="250dp"
                 android:layout_height="25dp"
                 android:max="100"
                 android:progress="100"
@@ -332,22 +296,23 @@
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
                 android:src="@drawable/stress_icon"
                 app:tint="@color/yellow" />
 
-            <TextView
-                android:layout_width="90dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="Stress"
-                android:textColor="@color/yellow"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+<!--            <TextView-->
+<!--                android:layout_width="90dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="center"-->
+<!--                android:text="Stress"-->
+<!--                android:textColor="@color/yellow"-->
+<!--                android:textSize="20sp"-->
+<!--                android:textStyle="bold" />-->
 
             <ProgressBar
                 android:id="@+id/stressProgress"
                 style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-                android:layout_width="200dp"
+                android:layout_width="250dp"
                 android:layout_height="25dp"
                 android:max="100"
                 android:progress="100"
@@ -387,27 +352,28 @@
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_marginEnd="10dp"
-                android:src="@drawable/str_icon"
-                app:tint="@color/blue" />
+                android:layout_marginStart="10dp"
+                android:src="@drawable/strength_icon"
+                app:tint="@color/purple" />
 
-            <TextView
-                android:layout_width="90dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="Strength"
-                android:textColor="@color/blue"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+<!--            <TextView-->
+<!--                android:layout_width="90dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="center"-->
+<!--                android:text="Strength"-->
+<!--                android:textColor="@color/blue"-->
+<!--                android:textSize="20sp"-->
+<!--                android:textStyle="bold" />-->
 
             <ProgressBar
                 android:id="@+id/strengthProgress"
                 style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-                android:layout_width="200dp"
+                android:layout_width="250dp"
                 android:layout_height="25dp"
                 android:max="100"
                 android:progress="100"
                 android:progressDrawable="@drawable/custom_progress_bar"
-                android:progressTint="@color/blue" />
+                android:progressTint="@color/purple" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -443,22 +409,23 @@
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
                 android:src="@drawable/smart_icon"
                 app:tint="@color/green" />
 
-            <TextView
-                android:layout_width="90dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="Smart"
-                android:textColor="@color/green"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+<!--            <TextView-->
+<!--                android:layout_width="90dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="center"-->
+<!--                android:text="Smart"-->
+<!--                android:textColor="@color/green"-->
+<!--                android:textSize="20sp"-->
+<!--                android:textStyle="bold" />-->
 
             <ProgressBar
                 android:id="@+id/smartProgress"
                 style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-                android:layout_width="200dp"
+                android:layout_width="250dp"
                 android:layout_height="25dp"
                 android:max="100"
                 android:progress="100"

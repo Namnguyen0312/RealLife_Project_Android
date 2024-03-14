@@ -60,7 +60,7 @@ public class SexDeterminationActivity extends AppCompatActivity {
 
         nextBtn.setOnClickListener(v -> {
             if (imagePic.getDrawable() == null){
-                AndroidUtil.showToast(this, "Please take a picture");
+                AndroidUtil.showToast(this, "Hãy chụp một bức ảnh");
             }
             else {
                 Intent intent = new Intent(this, SceneDeterminationActivity.class);
@@ -107,7 +107,7 @@ public class SexDeterminationActivity extends AppCompatActivity {
                     maxPos = i;
                 }
             }
-            String[] classes = {"Man", "Woman"};
+            String[] classes = {"Nam", "Nữ"};
             resultTxt.setText(classes[maxPos]);
             gender = classes[maxPos];
             // Releases model resources if no longer used.

@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:background="@drawable/btn_rounded_corner"
-        android:text="Next" />
+        android:text="Tiếp tục" />
 
 
     <TextView
@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="50dp"
-        android:text="Gender"
+        android:text="Giới tính"
         android:textSize="50sp"
         android:textStyle="bold" />
 
@@ -49,7 +49,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="50dp"
         android:background="@drawable/btn_rounded_corner"
-        android:text="Take a picture" />
+        android:text="Chụp ảnh" />
 
     <Button
         android:id="@+id/gallaryBtn"
@@ -58,7 +58,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
         android:background="@drawable/btn_rounded_corner"
-        android:text="Gallary" />
+        android:text="Thư viện" />
 
 
 </LinearLayout>

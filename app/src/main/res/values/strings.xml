@@ -3,67 +3,63 @@
 
     <string-array name="event_age0">
 
-        <item>You are a brave warrior, born and raised in a noble family
-            but choosing the adventurous path to fight against evil</item>
+        <item>Bạn là một chiến binh dũng cảm, sinh ra và lớn lên trong một gia đình quý tộc nhưng lại chọn con đường phiêu lưu để chiến đấu chống lại cái ác</item>
 
-        <item>You were born in a remote countryside, where creatures of horror abound,
-            yet with strong determination, you rose up to fight against the demons</item>
+        <item>Bạn được sinh ra ở một vùng nông thôn hẻo lánh, nơi có rất nhiều sinh vật kinh dị, nhưng với quyết tâm mạnh mẽ, bạn đã đứng lên để chiến đấu chống lại quái vật</item>
 
-        <item>You are a noblewoman warrior, carrying the bloodline of royalty.
-            Unable to bear the oppression of the demons, you set out on a quest to conquer justice</item>
+        <item>Bạn là một nữ chiến binh cao quý, mang dòng máu hoàng gia. Không thể chịu đựng được sự áp bức của lũ quỷ, bạn bắt đầu nhiệm vụ chinh phục công lý</item>
 
-        <item>Born into a poor peasant family, yet fueled by boundless love and
-            fortified by unwavering determination, you are on the path to becoming a strong warrior woman</item>
+        <item>Sinh ra trong một gia đình nông dân nghèo, nhưng được thúc đẩy bởi tình yêu vô bờ bến và được củng cố bởi quyết tâm không lay chuyển, bạn đang trên con đường trở thành một nữ chiến binh mạnh mẽ</item>
 
     </string-array>
 
 
     <string-array name="activities_outside">
-        <item>You found a treasure</item>
-        <item>You found a dungeon</item>
-        <item>You were given something by the nearby villagers</item>
-        <item>You wander in the forest and are chased by a bear</item>
-        <item>You are lost in the forest</item>
-        <item>You step into a trap</item>
-        <item>You learn a new skill</item>
-        <item>You spend the whole day lying on the ground</item>
-        <item>You spend the entire day running</item>
-        <item>You find an abandoned village</item>
-        <item>You are captured and robbed by soldiers</item>
-        <item>You encounter a band of thieves</item>
-        <item>You receive a task to escort</item>
-        <item>You receive a rescue mission</item>
-        <item>You are invited to participate in a tournament</item>
-        <item>You are taught a skill by your master</item>
-        <item>You stumble over a rock</item>
-        <item>You find a book of magic spells</item>
-        <item>You meet a spirit</item>
-        <item>You are blessed by the dragon lord</item> <!-- hiem -->
+        <item>Bạn đang lang thang và tìm thấy kho báu</item>
+        <item>Bạn đang đứng trước nơi cực kỳ đáng sợ, đầy rẫy quái vật ghê rợn, đó chính là dungeon</item>
+        <item>Bạn gặp được một người dân tốt bụng ở ngôi làng gần đó nói sẽ tặng bạn thứ gì đó</item>
+        <item>Bạn đang lang thang thì gặp phải gấu</item>
+        <item>Bạn lạc vào rừng và trời thì sắp tối </item>
+        <item>Bạn cảm thấy chân mình mất cảm giác và nhìn xuống thì nguyên một cái bẫy cắm vào chân bạn</item>
+<!--        <item>You learn a new skill</item>-->
+        <item>Bạn dành cả ngày chỉ để hít đất</item>
+        <item>Bạn dành cả ngày chỉ để chạy</item>
+        <item>Bạn đang đi thám thính thì tìm thấy ngôi làng bỏ hoang gần đó</item>
+<!--        <item>Bạn bị một nhóm cướp chặn đường</item>-->
+<!--        <item>You encounter a band of thieves</item>-->
+<!--        <item>You receive a task to escort</item>-->
+<!--        <item>You receive a rescue mission</item>-->
+<!--        <item>You are invited to participate in a tournament</item>-->
+<!--        <item>You are taught a skill by your master</item>-->
+<!--        <item>You stumble over a rock</item>-->
+<!--        <item>You find a book of magic spells</item>-->
+<!--        <item>You meet a spirit</item>-->
+<!--        <item>You are blessed by the dragon lord</item> &lt;!&ndash; hiem &ndash;&gt;-->
 
     </string-array>
 
 
     <string-array name="probabilities_outside">
-        <item>0.036</item>
-        <item>0.036</item>
-        <item>0.036</item>
-        <item>0.036</item>
-        <item>0.036</item>
-        <item>0.036</item>
-        <item>0.036</item>
-        <item>0.036</item>
-        <item>0.036</item>
-        <item>0.036</item>
-        <item>0.036</item>
-        <item>0.036</item>
-        <item>0.036</item>
-        <item>0.036</item>
-        <item>0.036</item>
-        <item>0.036</item>
-        <item>0.036</item>
-        <item>0.036</item>
-        <item>0.036</item>
-        <item>0.001</item>
+        <item>0.005</item>
+        <item>0.005</item>
+        <item>0.01</item>
+        <item>0.005</item>
+        <item>0.01</item>
+        <item>0.01</item>
+<!--        <item>0.036</item>-->
+<!--        <item>0.036</item>-->
+<!--        <item>0.036</item>-->
+<!--        <item>0.036</item>-->
+<!--        <item>0.036</item>-->
+<!--        <item>0.036</item>-->
+<!--        <item>0.036</item>-->
+<!--        <item>0.036</item>-->
+<!--        <item>0.036</item>-->
+<!--        <item>0.036</item>-->
+        <item>0.02</item>
+        <item>0.02</item>
+        <item>0.01</item>
+<!--        <item>0.001</item>-->
     </string-array>
 
 

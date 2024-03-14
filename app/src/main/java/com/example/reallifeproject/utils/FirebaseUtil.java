@@ -33,7 +33,7 @@ public class FirebaseUtil {
         return FirebaseFirestore.getInstance().collection("players");
     }
 
-    public static CollectionReference getEventModelReference(){
-        return getPlayerModelReferenceWithId().collection("events");
+    public static CollectionReference getDayModelReference(){
+        return getPlayerModelReferenceWithId().collection("days");
     }
 }
