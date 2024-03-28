@@ -11,9 +11,11 @@
 
     <color name="red">#FF0000</color>
 
-    <color name="yellow">#ACAE1F</color>
+    <color name="yellow">#B3B524</color>
 
     <color name="purple">#673AB7</color>
 
     <color name="green">#307f33</color>
+
+    <color name="blue">#2196F3</color>
 </resources>

@@ -4,11 +4,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
 
+import com.example.reallifeproject.model.InventoryModel;
+import com.example.reallifeproject.model.ItemModel;
 import com.example.reallifeproject.model.PlayerModel;
 import com.example.reallifeproject.model.UserModel;
 
-public class AndroidUtil {
+import java.util.ArrayList;
 
+public class AndroidUtil {
     public static void showToast(Context context, String message){
         Toast.makeText(context, message, Toast.LENGTH_LONG).show();
     }
@@ -27,8 +30,10 @@ public class AndroidUtil {
         intent.putExtra("attack", model.getAttack());
         intent.putExtra("magic", model.getMagic());
         intent.putExtra("defense", model.getDefense());
+        intent.putExtra("resistance", model.getResistance());
         intent.putExtra("agility", model.getAgility());
         intent.putExtra("isDead", model.isDead());
+
     }
 
     public static PlayerModel getPlayerModelFromIntent(Intent intent){
@@ -46,6 +51,7 @@ public class AndroidUtil {
         playerModel.setMagic(intent.getIntExtra("magic",0));
         playerModel.setAttack(intent.getIntExtra("attack",0));
         playerModel.setDefense(intent.getIntExtra("defense",0));
+        playerModel.setResistance(intent.getIntExtra("resistance",0));
         playerModel.setAgility(intent.getIntExtra("agility",0));
         playerModel.setDead(intent.getBooleanExtra("isDead", false));
         return playerModel;

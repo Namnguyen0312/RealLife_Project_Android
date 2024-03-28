@@ -21,45 +21,32 @@
         <item>Bạn đang lang thang thì gặp phải gấu</item>
         <item>Bạn lạc vào rừng và trời thì sắp tối </item>
         <item>Bạn cảm thấy chân mình mất cảm giác và nhìn xuống thì nguyên một cái bẫy cắm vào chân bạn</item>
-<!--        <item>You learn a new skill</item>-->
-        <item>Bạn dành cả ngày chỉ để hít đất</item>
-        <item>Bạn dành cả ngày chỉ để chạy</item>
         <item>Bạn đang đi thám thính thì tìm thấy ngôi làng bỏ hoang gần đó</item>
-<!--        <item>Bạn bị một nhóm cướp chặn đường</item>-->
-<!--        <item>You encounter a band of thieves</item>-->
-<!--        <item>You receive a task to escort</item>-->
-<!--        <item>You receive a rescue mission</item>-->
-<!--        <item>You are invited to participate in a tournament</item>-->
-<!--        <item>You are taught a skill by your master</item>-->
-<!--        <item>You stumble over a rock</item>-->
-<!--        <item>You find a book of magic spells</item>-->
-<!--        <item>You meet a spirit</item>-->
-<!--        <item>You are blessed by the dragon lord</item> &lt;!&ndash; hiem &ndash;&gt;-->
+        <item>Bạn bị một nhóm cướp chặn đường</item>
+        <item>Bạn được ủy thác đi hộ tống</item>
+        <item>Bạn được ủy thác đi giải cứu</item>
+        <item>Bạn được mời tham gia vào một giải đấu</item>
+        <!--        <item>You are taught a skill by your master</item>-->
+        <!--        <item>You stumble over a rock</item>-->
+        <!--        <item>You find a book of magic spells</item>-->
+        <!--        <item>You meet a spirit</item>-->
+        <!--        <item>You are blessed by the dragon lord</item> &lt;!&ndash; hiem &ndash;&gt;-->
 
     </string-array>
 
 
     <string-array name="probabilities_outside">
-        <item>0.005</item>
-        <item>0.005</item>
-        <item>0.01</item>
-        <item>0.005</item>
-        <item>0.01</item>
-        <item>0.01</item>
-<!--        <item>0.036</item>-->
-<!--        <item>0.036</item>-->
-<!--        <item>0.036</item>-->
-<!--        <item>0.036</item>-->
-<!--        <item>0.036</item>-->
-<!--        <item>0.036</item>-->
-<!--        <item>0.036</item>-->
-<!--        <item>0.036</item>-->
-<!--        <item>0.036</item>-->
-<!--        <item>0.036</item>-->
-        <item>0.02</item>
-        <item>0.02</item>
-        <item>0.01</item>
-<!--        <item>0.001</item>-->
+        <item>0.3</item>
+        <item>0.2</item>
+        <item>0.5</item>
+        <item>0.05</item>
+        <item>0.5</item>
+        <item>0.2</item>
+        <item>0.3</item>
+        <item>0.3</item>
+        <item>0.3</item>
+        <item>0.3</item>
+        <item>0.2</item>
     </string-array>
 
 

@@ -18,14 +18,6 @@ public class FirebaseUtil {
         return false;
     }
 
-    public static DocumentReference currentUserDetails(){
-        return FirebaseFirestore.getInstance().collection("users").document(currentUserId());
-    }
-
-    public static CollectionReference allUserCollectionReference(){
-        return FirebaseFirestore.getInstance().collection("users");
-    }
-
     public static DocumentReference getPlayerModelReferenceWithId(){
         return FirebaseFirestore.getInstance().collection("players").document(currentUserId());
     }
@@ -35,5 +27,12 @@ public class FirebaseUtil {
 
     public static CollectionReference getDayModelReference(){
         return getPlayerModelReferenceWithId().collection("days");
+    }
+    public static CollectionReference getItemModelReference(){
+        return getPlayerModelReferenceWithId().collection("items");
+    }
+
+    public static DocumentReference getInventoryModelReferenceWithId(){
+        return FirebaseFirestore.getInstance().collection("inventory").document(currentUserId());
     }
 }

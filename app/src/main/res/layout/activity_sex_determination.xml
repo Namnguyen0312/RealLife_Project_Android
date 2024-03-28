@@ -26,6 +26,7 @@
         android:layout_marginTop="50dp"
         android:text="Giới tính"
         android:textSize="50sp"
+        android:textColor="@color/black"
         android:textStyle="bold" />
 
     <ImageView
@@ -40,7 +41,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Result" />
+        android:text="Result"
+        android:textColor="@color/black"/>
 
     <Button
         android:id="@+id/takePicBtn"

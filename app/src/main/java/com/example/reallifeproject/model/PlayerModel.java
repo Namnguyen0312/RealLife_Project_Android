@@ -14,13 +14,15 @@ public class PlayerModel {
     private int attack;
     private int magic;
     private int defense;
+    private int resistance;
     private int agility;
     private boolean isDead;
+
 
     public PlayerModel() {
     }
 
-    public PlayerModel(String gender, String scene, String playerId, int money, int day, String event, int heart, int stress, int strength, int smart, int attack, int magic, int defense, int agility, boolean isDead) {
+    public PlayerModel(String gender, String scene, String playerId, int money, int day, String event, int heart, int stress, int strength, int smart, int attack, int magic, int defense, int resistance, int agility, boolean isDead) {
         this.gender = gender;
         this.scene = scene;
         this.playerId = playerId;
@@ -34,6 +36,7 @@ public class PlayerModel {
         this.attack = attack;
         this.magic = magic;
         this.defense = defense;
+        this.resistance = resistance;
         this.agility = agility;
         this.isDead = isDead;
     }
@@ -156,5 +159,13 @@ public class PlayerModel {
 
     public void setDead(boolean dead) {
         isDead = dead;
+    }
+
+    public int getResistance() {
+        return resistance;
+    }
+
+    public void setResistance(int resistance) {
+        this.resistance = resistance;
     }
 }

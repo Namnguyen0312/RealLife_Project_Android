@@ -33,7 +33,8 @@
         android:layout_marginTop="50dp"
         android:text="Xuất thân"
         android:textSize="50sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:textColor="@color/black"/>
 
     <ImageView
         android:id="@+id/imagePic"

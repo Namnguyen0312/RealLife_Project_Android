@@ -11,12 +11,13 @@ public class DayModel {
     private int attack;
     private int magic;
     private int defense;
+    private int resistance;
     private int agility;
 
     public DayModel() {
     }
 
-    public DayModel(int money, int day, String event, int heart, int stress, int strength, int smart, int attack, int magic, int defense, int agility) {
+    public DayModel(int money, int day, String event, int heart, int stress, int strength, int smart, int attack, int magic, int defense, int resistance, int agility) {
         this.money = money;
         this.day = day;
         this.event = event;
@@ -27,6 +28,7 @@ public class DayModel {
         this.attack = attack;
         this.magic = magic;
         this.defense = defense;
+        this.resistance = resistance;
         this.agility = agility;
     }
 
@@ -116,5 +118,13 @@ public class DayModel {
 
     public void setAgility(int agility) {
         this.agility = agility;
+    }
+
+    public int getResistance() {
+        return resistance;
+    }
+
+    public void setResistance(int resistance) {
+        this.resistance = resistance;
     }
 }

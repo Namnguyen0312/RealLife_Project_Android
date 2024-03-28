@@ -21,9 +21,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.reallifeproject.ml.Modellandscape;
 import com.example.reallifeproject.model.DayModel;
+import com.example.reallifeproject.model.ItemModel;
 import com.example.reallifeproject.model.PlayerModel;
 import com.example.reallifeproject.utils.AndroidUtil;
 import com.example.reallifeproject.utils.FirebaseUtil;
+import com.example.reallifeproject.utils.ItemUtil;
 import com.google.firebase.firestore.DocumentSnapshot;
 
 import org.tensorflow.lite.DataType;
@@ -32,6 +34,10 @@ import org.tensorflow.lite.support.tensorbuffer.TensorBuffer;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 
@@ -41,7 +47,7 @@ public class SceneDeterminationActivity extends AppCompatActivity {
     private Button takePicBtn, gallaryBtn, nextBtn;
     private ProgressBar loadProgress;
     private String gender, scene;
-    private int money, strength, smart, attack, magic, defense, agility;
+    private int money, strength, smart, attack, magic, defense, resistance, agility;
     private String event;
     int imageSize = 64;
 
@@ -85,13 +91,15 @@ public class SceneDeterminationActivity extends AppCompatActivity {
                         strength = 0;
                         smart = 0;
                         Random random = new Random();
-                        int randomAttack = random.nextInt(3) + 1;
-                        int randomMagic = random.nextInt(3) + 1;
-                        int randomDefense = random.nextInt(3) + 1;
-                        int randomAgility = random.nextInt(3) + 1;
+                        int randomAttack = random.nextInt(3) + 2;
+                        int randomMagic = random.nextInt(3) + 2;
+                        int randomDefense = random.nextInt(3) + 2;
+                        int randomResistance = random.nextInt(3) + 2;
+                        int randomAgility = random.nextInt(3) + 2;
                         attack = randomAttack;
                         magic = randomMagic;
                         defense = randomDefense;
+                        resistance = randomResistance;
                         agility = randomAgility;
                         money = 500;
                     } else {
@@ -99,13 +107,15 @@ public class SceneDeterminationActivity extends AppCompatActivity {
                         strength = 0;
                         smart = 0;
                         Random random = new Random();
-                        int randomAttack = random.nextInt(4) + 2;
-                        int randomMagic = random.nextInt(4) + 2;
-                        int randomDefense = random.nextInt(4) + 2;
-                        int randomAgility = random.nextInt(4) + 2;
+                        int randomAttack = random.nextInt(4) + 3;
+                        int randomMagic = random.nextInt(4) + 3;
+                        int randomDefense = random.nextInt(4) + 3;
+                        int randomResistance = random.nextInt(4) + 3;
+                        int randomAgility = random.nextInt(4) + 3;
                         attack = randomAttack;
                         magic = randomMagic;
                         defense = randomDefense;
+                        resistance = randomResistance;
                         agility = randomAgility;
                         money = 200;
                     }
@@ -118,10 +128,12 @@ public class SceneDeterminationActivity extends AppCompatActivity {
                         int randomAttack = random.nextInt(4) + 1;
                         int randomMagic = random.nextInt(4) + 1;
                         int randomDefense = random.nextInt(2) + 1;
+                        int randomResistance = random.nextInt(2) + 1;
                         int randomAgility = random.nextInt(4) + 1;
                         attack = randomAttack;
                         magic = randomMagic;
                         defense = randomDefense;
+                        resistance = randomResistance;
                         agility = randomAgility;
                         money = 500;
                     } else {
@@ -132,18 +144,43 @@ public class SceneDeterminationActivity extends AppCompatActivity {
                         int randomAttack = random.nextInt(5) + 2;
                         int randomMagic = random.nextInt(5) + 2;
                         int randomDefense = random.nextInt(3) + 2;
+                        int randomResistance = random.nextInt(3) + 2;
                         int randomAgility = random.nextInt(5) + 2;
                         attack = randomAttack;
                         magic = randomMagic;
                         defense = randomDefense;
+                        resistance = randomResistance;
                         agility = randomAgility;
                         money = 200;
                     }
                 }
 
+                PlayerModel playerModel = new PlayerModel(gender, scene, FirebaseUtil.currentUserId(), money, 0, event, 100, 0, strength, smart, attack, magic, defense, resistance,agility, false);
 
-                PlayerModel playerModel = new PlayerModel(gender, scene, FirebaseUtil.currentUserId(), money, 0, event, 100, 0, strength, smart, attack, magic, defense, agility, false);
-                DayModel dayModel = new DayModel(money, 0, event, 100, 0, strength, smart, attack, magic, defense, agility);
+                DayModel dayModel = new DayModel(money, 0, event, 100, 0, strength, smart, attack, magic, defense, resistance,agility);
+
+                ArrayList<ItemModel> itemModelArrayList = ItemUtil.getInstance().getItemModels();
+                List<Map<String, Object>> arrayListAsMap = new ArrayList<>();
+                for (ItemModel model : itemModelArrayList) {
+                    Map<String, Object> modelMap = new HashMap<>();
+                    modelMap.put("id", model.getId());
+                    modelMap.put("money", model.getMoney());
+                    modelMap.put("name", model.getName());
+                    modelMap.put("attack", model.getAttack());
+                    modelMap.put("defense", model.getDefense());
+                    modelMap.put("magic", model.getMagic());
+                    modelMap.put("resistance", model.getResistance());
+                    modelMap.put("agility", model.getAgility());
+                    modelMap.put("asked", model.getAsked());
+                    modelMap.put("describe", model.getDescribe());
+                    modelMap.put("gender", model.getGender());
+                    modelMap.put("type", model.getType());
+                    modelMap.put("kind", model.getKind());
+                    modelMap.put("common", model.getCommon());
+                    modelMap.put("isBuy", model.isBuy());
+                    modelMap.put("imageId", model.getImageId());
+                    arrayListAsMap.add(modelMap);
+                }
 
                 FirebaseUtil.getPlayerModelReference().get().addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
@@ -157,22 +194,57 @@ public class SceneDeterminationActivity extends AppCompatActivity {
                                 if (task1.isSuccessful()) {
                                     FirebaseUtil.getDayModelReference().get().addOnCompleteListener(task2 -> {
                                         if(task2.isSuccessful()){
-                                            if (!task.getResult().isEmpty()){
+                                            if (!task2.getResult().isEmpty()){
 
                                                 for (DocumentSnapshot document : task2.getResult()) {
                                                     document.getReference().delete();
                                                 }
+
                                                 setInProgress(false);
 
                                                 FirebaseUtil.getDayModelReference().add(dayModel).addOnCompleteListener(task3 -> {
-                                                    navigateToInGame();
+                                                    if (task3.isSuccessful()){
+                                                        FirebaseUtil.getItemModelReference().get().addOnCompleteListener(task4 -> {
+                                                            if (task4.isSuccessful()){
+                                                                if (task4.getResult().isEmpty()){
+                                                                    for (Map<String, Object> map : arrayListAsMap){
+                                                                        FirebaseUtil.getItemModelReference().add(map);
+                                                                    }
+                                                                    navigateToWaiting();
+                                                                }else {
+                                                                    for (DocumentSnapshot document : task4.getResult()) {
+                                                                        document.getReference().delete();
+                                                                    }
+                                                                    for (Map<String, Object> map : arrayListAsMap){
+                                                                        FirebaseUtil.getItemModelReference().add(map);
+                                                                    }
+                                                                    navigateToWaiting();
+                                                                }
+                                                            }
+                                                        });
+
+                                                    }
                                                 });
                                             }else {
                                                 setInProgress(false);
-
                                                 FirebaseUtil.getDayModelReference().add(dayModel).addOnCompleteListener(task3 -> {
-                                                    navigateToInGame();
+                                                    if (task3.isSuccessful()){
+                                                        FirebaseUtil.getItemModelReference().get().addOnCompleteListener(task4 -> {
+                                                            if (task4.isSuccessful()){
+                                                                if (task4.getResult().isEmpty()){
+                                                                    for (Map<String, Object> map : arrayListAsMap){
+                                                                        FirebaseUtil.getItemModelReference().add(map);
+                                                                    }
+                                                                    navigateToWaiting();
+                                                                }else {
+                                                                    navigateToWaiting();
+                                                                }
+                                                            }
+                                                        });
+
+                                                    }
                                                 });
+
                                                 Log.d(TAG, "Collection does not exist or is empty");
                                             }
                                         }else {
@@ -185,8 +257,58 @@ public class SceneDeterminationActivity extends AppCompatActivity {
                             setInProgress(false);
                             FirebaseUtil.getPlayerModelReferenceWithId().set(playerModel).addOnCompleteListener(task1 -> {
                                 if (task1.isSuccessful()) {
-                                    FirebaseUtil.getDayModelReference().add(dayModel).addOnCompleteListener(task2 -> {
-                                        navigateToInGame();
+                                    FirebaseUtil.getDayModelReference().get().addOnCompleteListener(task2 -> {
+                                        if(task2.isSuccessful()){
+                                            if (!task2.getResult().isEmpty()){
+
+                                                for (DocumentSnapshot document : task2.getResult()) {
+                                                    document.getReference().delete();
+                                                }
+
+                                                setInProgress(false);
+
+                                                FirebaseUtil.getDayModelReference().add(dayModel).addOnCompleteListener(task3 -> {
+                                                    if (task3.isSuccessful()){
+                                                        FirebaseUtil.getItemModelReference().get().addOnCompleteListener(task4 -> {
+                                                            if (task4.isSuccessful()){
+                                                                if (task4.getResult().isEmpty()){
+                                                                    for (Map<String, Object> map : arrayListAsMap){
+                                                                        FirebaseUtil.getItemModelReference().add(map);
+                                                                    }
+                                                                    navigateToWaiting();
+                                                                }else {
+                                                                    navigateToWaiting();
+                                                                }
+                                                            }
+                                                        });
+
+                                                    }
+                                                });
+                                            }else {
+                                                setInProgress(false);
+                                                FirebaseUtil.getDayModelReference().add(dayModel).addOnCompleteListener(task3 -> {
+                                                    if (task3.isSuccessful()){
+                                                        FirebaseUtil.getItemModelReference().get().addOnCompleteListener(task4 -> {
+                                                            if (task4.isSuccessful()){
+                                                                if (task4.getResult().isEmpty()){
+                                                                    for (Map<String, Object> map : arrayListAsMap){
+                                                                        FirebaseUtil.getItemModelReference().add(map);
+                                                                    }
+                                                                    navigateToWaiting();
+                                                                }else {
+                                                                    navigateToWaiting();
+                                                                }
+                                                            }
+                                                        });
+
+                                                    }
+                                                });
+
+                                                Log.d(TAG, "Collection does not exist or is empty");
+                                            }
+                                        }else {
+                                            Log.d(TAG, "Error getting collection: ", task.getException());
+                                        }
                                     });
                                 }
                             });
@@ -200,8 +322,9 @@ public class SceneDeterminationActivity extends AppCompatActivity {
         });
     }
 
-    private void navigateToInGame() {
+    private void navigateToWaiting() {
         Intent intent = new Intent(this, WaitingActivity.class);
+        intent.putExtra("to_activity", "InGameActivity");
         startActivity(intent);
     }
 

@@ -32,19 +32,20 @@ import java.util.Random;
 
 
 public class InGameActivity extends AppCompatActivity implements EventDialog.EventDialogListener {
-    private TextView moneyTxt, dayTxt, genderTxt, sceneTxt, atkTxt, magicTxt, defTxt, agiTxt;
+    private TextView moneyTxt, dayTxt, genderTxt, sceneTxt, atkTxt, magicTxt, defTxt, resisTxt,agiTxt;
     private TextView valueHeart, valueStress, valueStrength, valueSmart;
-    //    private Button eventBtn1, eventBtn2, eventBtn3;
+    private ImageView shopBtn, trainingBtn, skillBtn, inventoryBtn;
     private Button dayBtn;
     private ProgressBar heartProgress, stressProgress, strengthProgress, smartProgress;
     private ProgressBar loadProgress;
     private PlayerModel playerModel;
     private int day = 0;
     private String event, gender, scene;
-    private int heart, stress, strength, smart, money, attack, magic, defense, agility;
+    private int heart, stress, strength, smart, money, attack, magic, defense, resistance,agility;
     private boolean isDead = false;
     private RecyclerView dayRecView;
     private DayRecViewAdapter adapter;
+    private String dialog;
     private static final String TAG = "InGameActivity";
 
 
@@ -86,11 +87,44 @@ public class InGameActivity extends AppCompatActivity implements EventDialog.Eve
             }else {
                 day++;
                 dayTxt.setText(String.valueOf(day));
+                dialog = "day";
                 openDialog();
 
             }
         });
 
+
+        trainingBtn.setOnClickListener(v -> {
+            day++;
+            dayTxt.setText(String.valueOf(day));
+            dialog = "training";
+            openDialog();
+        });
+
+        shopBtn.setOnClickListener(v -> {
+            navigateToShopActivity();
+        });
+
+        skillBtn.setOnClickListener(v -> {
+            // TODO: Skill Button
+        });
+
+        inventoryBtn.setOnClickListener(v -> {
+            navigateToInventoryActivity();
+        });
+
+    }
+
+    private void navigateToInventoryActivity(){
+        Intent intent = new Intent(this, WaitingActivity.class);
+        intent.putExtra("to_activity", "InGameToInventoryActivity");
+        startActivity(intent);
+    }
+
+    private void navigateToShopActivity(){
+        Intent intent = new Intent(this, WaitingActivity.class);
+        intent.putExtra("to_activity", "ShopActivity");
+        startActivity(intent);
     }
 
     private void registerSnapshotListener() {
@@ -122,11 +156,13 @@ public class InGameActivity extends AppCompatActivity implements EventDialog.Eve
         bundle.putInt("attack", attack);
         bundle.putInt("magic", magic);
         bundle.putInt("defense", defense);
+        bundle.putInt("resistance", resistance);
         bundle.putInt("agility", agility);
         bundle.putInt("money", money);
         bundle.putInt("day", day);
         bundle.putString("event", event);
         bundle.putBoolean("isDead", isDead);
+        bundle.putString("dialog", dialog);
 
         EventDialog eventDialog = new EventDialog();
 
@@ -171,9 +207,9 @@ public class InGameActivity extends AppCompatActivity implements EventDialog.Eve
         attack = playerModel.getAttack();
         magic = playerModel.getMagic();
         defense = playerModel.getDefense();
+        resistance = playerModel.getResistance();
         agility = playerModel.getAgility();
         isDead = playerModel.isDead();
-
 
         valueHeart.setText(String.valueOf(heart));
         valueStress.setText(String.valueOf(stress));
@@ -190,8 +226,8 @@ public class InGameActivity extends AppCompatActivity implements EventDialog.Eve
         atkTxt.setText(String.valueOf(attack));
         magicTxt.setText(String.valueOf(magic));
         defTxt.setText(String.valueOf(defense));
+        resisTxt.setText(String.valueOf(resistance));
         agiTxt.setText(String.valueOf(agility));
-
     }
 
     private void initView() {
@@ -206,13 +242,14 @@ public class InGameActivity extends AppCompatActivity implements EventDialog.Eve
         atkTxt = findViewById(R.id.atkTxt);
         magicTxt = findViewById(R.id.magicTxt);
         defTxt = findViewById(R.id.defTxt);
+        resisTxt = findViewById(R.id.resisTxt);
         agiTxt = findViewById(R.id.agiTxt);
         dayRecView = findViewById(R.id.dayRecView);
         dayBtn = findViewById(R.id.dayBtn);
-
-//        eventBtn1 = findViewById(R.id.eventBtn1);
-//        eventBtn2 = findViewById(R.id.eventBtn2);
-//        eventBtn3 = findViewById(R.id.eventBtn3);
+        shopBtn = findViewById(R.id.shopBtn);
+        trainingBtn = findViewById(R.id.trainingBtn);
+        skillBtn = findViewById(R.id.skillBtn);
+        inventoryBtn = findViewById(R.id.inventoryBtn);
         loadProgress = findViewById(R.id.loadProgress);
         heartProgress = findViewById(R.id.heartProgress);
         stressProgress = findViewById(R.id.stressProgress);
@@ -262,6 +299,7 @@ public class InGameActivity extends AppCompatActivity implements EventDialog.Eve
             }
             smartProgress.setProgress(smart);
             valueSmart.setText(String.valueOf(smart));
+            Log.d(TAG, "getAtt: smart " + smart);
         }
 
         if (att.containsKey("agility")) {
@@ -283,6 +321,10 @@ public class InGameActivity extends AppCompatActivity implements EventDialog.Eve
         if (att.containsKey("isDead")){
             isDead = (boolean) att.get("isDead");
             if (isDead){
+                shopBtn.setEnabled(false);
+                skillBtn.setEnabled(false);
+                trainingBtn.setEnabled(false);
+                inventoryBtn.setEnabled(false);
                 dayBtn.setText("Chơi mới");
             }
         }

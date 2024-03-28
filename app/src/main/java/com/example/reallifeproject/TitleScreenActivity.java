@@ -47,7 +47,8 @@ public class TitleScreenActivity extends AppCompatActivity {
                 if (document.exists()) {
                     loadGameBtn.setEnabled(true);
                     loadGameBtn.setOnClickListener(v -> {
-                        Intent intent = new Intent(this, WaitingActivity.class); // Thay bằng màn hình chờ đợi hoặc màn hình trò chơi của bạn
+                        Intent intent = new Intent(this, WaitingActivity.class);
+                        intent.putExtra("to_activity", "InGameActivity");
                         startActivity(intent);
                     });
                 } else {
