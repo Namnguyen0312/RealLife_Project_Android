@@ -129,7 +129,16 @@ public class ShopRecViewAdapter extends FirestoreRecyclerAdapter<ItemModel, Shop
                             AndroidUtil.showToast(context, "Chức nghiệp không phù hợp");
                         }
                     });
+                }else {
+                    builder.setPositiveButton("Mua", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            shopActivity.setMoney(changeMoney);
+                            setPlayerModel(dialog, model, getSnapshots().getSnapshot(position).getId());
+                        }
+                    });
                 }
+
             } else {
                 builder.setPositiveButton("Mua", new DialogInterface.OnClickListener() {
                     @Override

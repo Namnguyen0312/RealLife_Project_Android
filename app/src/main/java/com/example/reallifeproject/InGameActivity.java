@@ -89,7 +89,6 @@ public class InGameActivity extends AppCompatActivity implements EventDialog.Eve
                 dayTxt.setText(String.valueOf(day));
                 dialog = "day";
                 openDialog();
-
             }
         });
 
@@ -292,11 +291,6 @@ public class InGameActivity extends AppCompatActivity implements EventDialog.Eve
 
         if (att.containsKey("smart")) {
             smart = (int) att.get("smart");
-            if (smart > 100) {
-                smart = 100;
-            } else if (smart < 0) {
-                smart = 0;
-            }
             smartProgress.setProgress(smart);
             valueSmart.setText(String.valueOf(smart));
             Log.d(TAG, "getAtt: smart " + smart);
@@ -304,17 +298,29 @@ public class InGameActivity extends AppCompatActivity implements EventDialog.Eve
 
         if (att.containsKey("agility")) {
             agility = (int) att.get("agility");
-             if (agility < 0) {
-                smart = 0;
-            }
             agiTxt.setText(String.valueOf(agility));
+        }
+
+        if (att.containsKey("attack")) {
+            attack = (int) att.get("attack");
+            atkTxt.setText(String.valueOf(attack));
+        }
+
+        if (att.containsKey("defense")) {
+            defense = (int) att.get("defense");
+            defTxt.setText(String.valueOf(defense));
+        }
+        if (att.containsKey("resistance")) {
+            resistance = (int) att.get("resistance");
+            resisTxt.setText(String.valueOf(resistance));
+        }
+        if (att.containsKey("magic")) {
+            magic = (int) att.get("magic");
+            magicTxt.setText(String.valueOf(magic));
         }
 
         if (att.containsKey("money")) {
             money = (int) att.get("money");
-            if (money < 0) {
-                money = 0;
-            }
             moneyTxt.setText(String.valueOf(money));
         }
 
@@ -327,6 +333,11 @@ public class InGameActivity extends AppCompatActivity implements EventDialog.Eve
                 inventoryBtn.setEnabled(false);
                 dayBtn.setText("Chơi mới");
             }
+        }
+
+        if (att.containsKey("scene")) {
+            scene = (String) att.get("scene");
+            sceneTxt.setText(scene);
         }
     }
 

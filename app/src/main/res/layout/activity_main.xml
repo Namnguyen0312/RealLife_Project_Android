@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:background="@drawable/btn_rounded_corner"
-        android:text="Login" />
+        android:text="Đăng nhập" />
 
     <Button
         android:id="@+id/registerBtn"
@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:background="@drawable/btn_rounded_corner"
-        android:text="Register" />
+        android:text="Đăng ký" />
 
 
 </LinearLayout>

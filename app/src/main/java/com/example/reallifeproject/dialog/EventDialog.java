@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.reallifeproject.R;
@@ -40,10 +41,7 @@ public class EventDialog extends DialogFragment {
     private int day, heart, stress, strength, smart, attack, magic, defense, resistance,agility, money;
     private String event;
     private String gender, scene;
-    private int changeHeart, changeStress, changeStrength, changeSmart, changeAgility, changeAttack, changeMagic, changeDefense, changeMoney;
-//    private List<String> activities;
-//    private List<Double> probabilities;
-//    private List<Double> cumulativeProbabilities;
+    private int changeHeart, changeStress, changeStrength, changeSmart, changeAgility, changeAttack, changeMagic, changeDefense, changeResistance,changeMoney;
     private String selectedActivity = "";
     private EventDialogListener listener;
     private String dialog;
@@ -97,88 +95,295 @@ public class EventDialog extends DialogFragment {
 
         if (dialog.equals("day")){
 //                        selectedActivity = "Bạn lạc vào rừng và trời thì sắp tối";
-            event = selectedActivity;
-            randomEventTxt.setText(selectedActivity);
-            switch (selectedActivity) {
-                case "":
-                    randomEventPic.setVisibility(View.GONE);
-                    btn1.setVisibility(View.VISIBLE);
-                    btn2.setVisibility(View.GONE);
-                    btn3.setVisibility(View.GONE);
-                    btn4.setVisibility(View.GONE);
-                    btn5.setVisibility(View.GONE);
-                    btn6.setVisibility(View.GONE);
-                    event = "Hôm nay là một ngày yên ắng, bạn thấy thời gian trôi qua thật mau";
-                    randomEventTxt.setText(event);
-                    btn1.setText("Tiếp");
-                    btn1.setOnClickListener(v -> {
-                        loadProgress.setVisibility(View.VISIBLE);
+            if(day == 10){
+                randomEventPic.setVisibility(View.GONE);
+                randomEventTxt.setText("Bạn hãy chọn nghề nghiệp mà bạn muồn chuyển?");
+                btn1.setVisibility(View.VISIBLE);
+                btn2.setVisibility(View.VISIBLE);
+                btn3.setVisibility(View.GONE);
+                btn4.setVisibility(View.GONE);
+                btn5.setVisibility(View.GONE);
+                btn6.setVisibility(View.GONE);
+                event = "Bạn đắn đo suy nghĩ không biết nên chọn chức nghiệp nào";
+                btn1.setText("Chiến binh");
+                btn2.setText("Pháp sư");
+                btn1.setOnClickListener(v -> {
+                    loadProgress.setVisibility(View.VISIBLE);
 
-                        event += "\nGiữa đêm cảnh vật hữu tình, bạn nhớ lại những ngày còn thơ bé";
+                    scene = "Chiến binh";
+                    changeAttack = 10;
+                    changeDefense = 10;
+                    changeResistance = 10;
+                    attack += changeAttack;
+                    defense += changeDefense;
+                    resistance += changeResistance;
+                    event += "\nBạn đã chuyển nghiệp thành Chiến Binh (+" + changeAttack + " tấn công) (+" + changeDefense + " giáp) (+" + changeResistance + " kháng phép)";
+                    updateMap();
 
-                        updateMap();
+                    listener.getAtt(hashMap);
 
-                        listener.getAtt(hashMap);
-
-                        FirebaseUtil.getPlayerModelReferenceWithId().update(hashMap).addOnCompleteListener(task -> {
-                            if (task.isSuccessful()) {
-                                FirebaseUtil.getDayModelReference().add(hashMap).addOnCompleteListener(task1 -> {
-                                    if (task1.isSuccessful()) {
-                                        loadProgress.setVisibility(View.GONE);
-                                        dismiss();
-                                    }
-                                });
-                            }
-                        });
+                    FirebaseUtil.getPlayerModelReferenceWithId().update(hashMap).addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            FirebaseUtil.getDayModelReference().add(hashMap).addOnCompleteListener(task1 -> {
+                                if (task1.isSuccessful()) {
+                                    loadProgress.setVisibility(View.GONE);
+                                    dismiss();
+                                }
+                            });
+                        }
                     });
-                    break;
-                case "Bạn đang lang thang và tìm thấy kho báu":
-                    randomEventPic.setImageResource(R.drawable.treasure_icon);
-                    chooseTreasure();
-                    break;
-                case "Bạn đang đứng trước nơi cực kỳ đáng sợ, đầy rẫy quái vật ghê rợn, đó chính là dungeon":
-                    randomEventPic.setImageResource(R.drawable.dungeon_icon);
-                    chooseDungeon();
-                    break;
-                case "Bạn gặp được một người dân tốt bụng ở ngôi làng gần đó nói sẽ tặng bạn thứ gì đó":
-                    randomEventPic.setImageResource(R.drawable.pocket_coins_icon);
-                    chooseSomethingFromVil();
-                    break;
-                case "Bạn đang lang thang thì gặp phải gấu":
-                    randomEventPic.setImageResource(R.drawable.bear_icon);
-                    chooseChasedByBear();
-                    break;
-                case "Bạn lạc vào rừng và trời thì sắp tối":
-                    randomEventPic.setImageResource(R.drawable.forest_icon);
-                    chooseLost();
-                    break;
-                case "Bạn cảm thấy chân mình mất cảm giác và nhìn xuống thì nguyên một cái bẫy cắm vào chân bạn":
-                    randomEventPic.setImageResource(R.drawable.trap_icon);
-                    chooseTrap();
-                    break;
-                case "Bạn tìm thấy ngôi làng bỏ hoang gần đó":
-                    randomEventPic.setImageResource(R.drawable.village_icon);
-                    chooseAbandonedVillage();
-                    break;
-                case "Bạn bị một nhóm cướp chặn đường":
-                    randomEventPic.setImageResource(R.drawable.rogue_icon);
-                    chooseCaptured();
-                    break;
-                case "Bạn được ủy thác đi hộ tống":
-                    randomEventPic.setImageResource(R.drawable.quest_icon);
-                    chooseEscort();
-                    break;
-                case "Bạn được ủy thác đi giải cứu":
-                    randomEventPic.setImageResource(R.drawable.quest_icon);
-                    chooseRescue();
-                    break;
-                case "Bạn được mời tham gia vào một giải đấu":
-                    randomEventPic.setImageResource(R.drawable.tournament_icon);
-                    chooseTournament();
-                    break;
-                default:
-                    dismiss();
-                    break;
+                });
+                btn2.setOnClickListener(v -> {
+                    loadProgress.setVisibility(View.VISIBLE);
+
+                    scene = "Pháp sư";
+                    changeMagic = 20;
+                    magic += changeMagic;
+                    event += "\nBạn đã chuyển nghiệp thành Pháp Sư (+" + changeMagic + " phép thuật)";
+                    updateMap();
+
+                    listener.getAtt(hashMap);
+
+                    FirebaseUtil.getPlayerModelReferenceWithId().update(hashMap).addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            FirebaseUtil.getDayModelReference().add(hashMap).addOnCompleteListener(task1 -> {
+                                if (task1.isSuccessful()) {
+                                    loadProgress.setVisibility(View.GONE);
+                                    dismiss();
+                                }
+                            });
+                        }
+                    });
+                });
+            }else if (day == 20){
+                randomEventPic.setVisibility(View.GONE);
+                event = "Bạn đụng độ trùm cuối";
+                randomEventTxt.setText(event);
+                btn1.setVisibility(View.VISIBLE);
+                btn2.setVisibility(View.GONE);
+                btn3.setVisibility(View.GONE);
+                btn4.setVisibility(View.GONE);
+                btn5.setVisibility(View.GONE);
+                btn6.setVisibility(View.GONE);
+                btn1.setText("Tấn công (200 máu) (50 tấn công) (20 giáp) (20 kháng phép)");
+                btn1.setOnClickListener(v -> {
+                    loadProgress.setVisibility(View.VISIBLE);
+                    int atkBoss = 50;
+                    int defBoss = 20;
+                    int resisBoss = 20;
+                    int heartBoss = 200;
+                    int damageReceived;
+                    int damageInflictedAll;
+                    int damageInflictedAttack;
+                    int damageInflictedMagic;
+                    int totalDamageReceived = 0;
+                    int randomValue = random.nextInt(2);
+                    boolean isEnd = false;
+                    while (!isEnd) {
+                        damageInflictedAttack = (attack - defBoss);
+                        damageInflictedMagic = (magic - resisBoss);
+                        damageReceived = atkBoss - defense;
+                        if (damageInflictedAttack < 0) { damageInflictedAttack = 0; }
+                        if (damageInflictedMagic < 0) { damageInflictedMagic = 0; }
+                        if (damageReceived < 0) { damageReceived = 0; }
+                        totalDamageReceived += damageReceived;
+                        damageInflictedAll = damageInflictedAttack + damageInflictedMagic;
+                        if (randomValue == 0) {
+                            if (damageInflictedAll > 0) {
+                                heartBoss -= damageInflictedAll;
+                                if (heartBoss <= 0) {
+                                    isEnd = true;
+                                    isDead = true;
+                                    heart -= totalDamageReceived;
+                                    event += "\nBạn đã đánh bại trùm cuối";
+                                    normalizeData();
+
+                                    updateMap();
+
+                                    listener.getAtt(hashMap);
+                                    FirebaseUtil.getPlayerModelReferenceWithId().update(hashMap).addOnCompleteListener(task -> {
+                                        if (task.isSuccessful()) {
+                                            FirebaseUtil.getDayModelReference().add(hashMap).addOnCompleteListener(task1 -> {
+                                                if (task1.isSuccessful()) {
+                                                    loadProgress.setVisibility(View.GONE);
+                                                    dismiss();
+                                                }
+                                            });
+                                        }
+                                    });
+                                    continue;
+                                }
+                            }
+
+                            if (damageReceived > 0) {
+                                heart -= damageReceived;
+                                if (heart <= 0) {
+                                    isDead = true;
+                                    isEnd = true;
+                                    event += "\nBạn đã chết";
+                                    heart = 0;
+
+                                    updateMap();
+
+                                    listener.getAtt(hashMap);
+
+                                    FirebaseUtil.getPlayerModelReferenceWithId().update(hashMap).addOnCompleteListener(task -> {
+                                        if (task.isSuccessful()) {
+
+                                            FirebaseUtil.getDayModelReference().add(hashMap).addOnCompleteListener(task1 -> {
+                                                if (task1.isSuccessful()) {
+                                                    loadProgress.setVisibility(View.GONE);
+                                                    dismiss();
+                                                }
+                                            });
+                                        }
+                                    });
+                                }
+                            }
+                        } else {
+                            if (damageReceived > 0) {
+                                heart -= damageReceived;
+                                if (heart <= 0) {
+                                    isDead = true;
+                                    isEnd = true;
+                                    event += "\nBạn đã chết";
+                                    heart = 0;
+
+                                    updateMap();
+
+                                    listener.getAtt(hashMap);
+
+                                    FirebaseUtil.getPlayerModelReferenceWithId().update(hashMap).addOnCompleteListener(task -> {
+                                        if (task.isSuccessful()) {
+
+                                            FirebaseUtil.getDayModelReference().add(hashMap).addOnCompleteListener(task1 -> {
+                                                if (task1.isSuccessful()) {
+                                                    loadProgress.setVisibility(View.GONE);
+                                                    dismiss();
+                                                }
+                                            });
+                                        }
+                                    });
+                                    continue;
+                                }
+                            }
+                            if (damageInflictedAll > 0) {
+                                heartBoss -= damageInflictedAll;
+                                if (heartBoss <= 0) {
+                                    isEnd = true;
+                                    isDead = true;
+                                    heart -= totalDamageReceived;
+                                    event += "\nBạn đã đánh bại trùm cuối";
+
+                                    normalizeData();
+
+                                    updateMap();
+
+                                    listener.getAtt(hashMap);
+
+                                    FirebaseUtil.getPlayerModelReferenceWithId().update(hashMap).addOnCompleteListener(task -> {
+                                        if (task.isSuccessful()) {
+
+                                            FirebaseUtil.getDayModelReference().add(hashMap).addOnCompleteListener(task1 -> {
+                                                if (task1.isSuccessful()) {
+                                                    loadProgress.setVisibility(View.GONE);
+                                                    dismiss();
+                                                }
+                                            });
+                                        }
+                                    });
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+            else {
+//                selectedActivity = "Bạn đang lang thang và tìm thấy kho báu";
+                event = selectedActivity;
+
+                randomEventTxt.setText(selectedActivity);
+                switch (selectedActivity) {
+                    case "":
+                        randomEventPic.setVisibility(View.GONE);
+                        btn1.setVisibility(View.VISIBLE);
+                        btn2.setVisibility(View.GONE);
+                        btn3.setVisibility(View.GONE);
+                        btn4.setVisibility(View.GONE);
+                        btn5.setVisibility(View.GONE);
+                        btn6.setVisibility(View.GONE);
+                        event = "Hôm nay là một ngày yên ắng, bạn thấy thời gian trôi qua thật mau";
+                        randomEventTxt.setText(event);
+                        btn1.setText("Tiếp");
+                        btn1.setOnClickListener(v -> {
+                            loadProgress.setVisibility(View.VISIBLE);
+
+                            event += "\nGiữa đêm cảnh vật hữu tình, bạn nhớ lại những ngày còn thơ bé";
+
+                            updateMap();
+
+                            listener.getAtt(hashMap);
+
+                            FirebaseUtil.getPlayerModelReferenceWithId().update(hashMap).addOnCompleteListener(task -> {
+                                if (task.isSuccessful()) {
+                                    FirebaseUtil.getDayModelReference().add(hashMap).addOnCompleteListener(task1 -> {
+                                        if (task1.isSuccessful()) {
+                                            loadProgress.setVisibility(View.GONE);
+                                            dismiss();
+                                        }
+                                    });
+                                }
+                            });
+                        });
+                        break;
+                    case "Bạn đang lang thang và tìm thấy kho báu":
+                        randomEventPic.setImageResource(R.drawable.treasure_icon);
+                        chooseTreasure();
+                        break;
+                    case "Bạn đang đứng trước nơi cực kỳ đáng sợ, đầy rẫy quái vật ghê rợn, đó chính là dungeon":
+                        randomEventPic.setImageResource(R.drawable.dungeon_icon);
+                        chooseDungeon();
+                        break;
+                    case "Bạn gặp được một người dân tốt bụng ở ngôi làng gần đó nói sẽ tặng bạn thứ gì đó":
+                        randomEventPic.setImageResource(R.drawable.pocket_coins_icon);
+                        chooseSomethingFromVil();
+                        break;
+                    case "Bạn đang lang thang thì gặp phải gấu":
+                        randomEventPic.setImageResource(R.drawable.bear_icon);
+                        chooseChasedByBear();
+                        break;
+                    case "Bạn lạc vào rừng và trời thì sắp tối":
+                        randomEventPic.setImageResource(R.drawable.forest_icon);
+                        chooseLost();
+                        break;
+                    case "Bạn cảm thấy chân mình mất cảm giác và nhìn xuống thì nguyên một cái bẫy cắm vào chân bạn":
+                        randomEventPic.setImageResource(R.drawable.trap_icon);
+                        chooseTrap();
+                        break;
+                    case "Bạn tìm thấy ngôi làng bỏ hoang gần đó":
+                        randomEventPic.setImageResource(R.drawable.village_icon);
+                        chooseAbandonedVillage();
+                        break;
+                    case "Bạn bị một nhóm cướp chặn đường":
+                        randomEventPic.setImageResource(R.drawable.rogue_icon);
+                        chooseCaptured();
+                        break;
+                    case "Bạn được ủy thác đi hộ tống":
+                        randomEventPic.setImageResource(R.drawable.quest_icon);
+                        chooseEscort();
+                        break;
+                    case "Bạn được ủy thác đi giải cứu":
+                        randomEventPic.setImageResource(R.drawable.quest_icon);
+                        chooseRescue();
+                        break;
+                    case "Bạn được mời tham gia vào một giải đấu":
+                        randomEventPic.setImageResource(R.drawable.tournament_icon);
+                        chooseTournament();
+                        break;
+                    default:
+                        dismiss();
+                        break;
+                }
             }
         } else if (dialog.equals("training")) {
             event = "Bạn đang suy nghĩ nên lựa chọn bài tập nào?";
@@ -493,9 +698,11 @@ public class EventDialog extends DialogFragment {
         hashMap.put("attack", attack);
         hashMap.put("magic", magic);
         hashMap.put("defense", defense);
+        hashMap.put("resistance", resistance);
         hashMap.put("agility", agility);
         hashMap.put("event", event);
         hashMap.put("isDead", isDead);
+        hashMap.put("scene", scene);
     }
 
     private void chooseTreasure() {
